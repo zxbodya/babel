@@ -208,7 +208,7 @@
     "node": "10.13",
     "ie": "9",
     "ios": "10.3",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es6.array.species": {
     "chrome": "51",
@@ -287,7 +287,8 @@
     "node": "0.10",
     "ie": "9",
     "android": "4.0",
-    "ios": "7"
+    "ios": "7",
+    "electron": "5"
   },
   "es6.function.has-instance": {
     "chrome": "51",
@@ -621,7 +622,7 @@
     "node": "8.10",
     "ios": "9",
     "opera": "49",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es7.object.define-setter": {
     "chrome": "62",
@@ -631,7 +632,7 @@
     "node": "8.10",
     "ios": "9",
     "opera": "49",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es6.object.define-property": {
     "chrome": "5",
@@ -724,7 +725,7 @@
     "node": "8.10",
     "ios": "9",
     "opera": "49",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es7.object.lookup-setter": {
     "chrome": "62",
@@ -733,7 +734,7 @@
     "node": "8.10",
     "ios": "9",
     "opera": "49",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es6.object.prevent-extensions": {
     "chrome": "44",
@@ -844,7 +845,7 @@
     "node": "10.13",
     "ios": "11.3",
     "opera": "50",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es6.reflect.apply": {
     "chrome": "49",
@@ -1065,7 +1066,7 @@
     "node": "10.13",
     "ios": "12",
     "opera": "50",
-    "electron": "3"
+    "electron": "3.1"
   },
   "es6.string.anchor": {
     "chrome": "5",

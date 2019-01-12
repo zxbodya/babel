@@ -4,8 +4,8 @@ const fs = require("fs");
 const moduleSupport = require("caniuse-db/features-json/es6-module.json");
 
 const acceptedWithCaveats = {
-  safari: true,
   ios_saf: true,
+  safari: true,
 };
 
 const { stats } = moduleSupport;
@@ -19,7 +19,7 @@ Object.keys(stats).forEach(browser => {
       .filter(value => {
         return acceptedWithCaveats[browser]
           ? browserVersions[value][0] === "a"
-          : browserVersions[value] === "y";
+          : browserVersions[value][0] === "y";
       })
       .sort((a, b) => a - b);
 
