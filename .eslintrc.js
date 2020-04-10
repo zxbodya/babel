@@ -20,10 +20,27 @@ module.exports = {
   },
   overrides: [
     {
+      files: ["**/*.ts", "**/*.tsx"],
+      parser: "@typescript-eslint/parser",
+      plugins: ["@typescript-eslint"],
+      rules: {
+        // should be replaced with @typescript-eslint/no-unused-vars,
+        // but there is apparently a bug when importing type namespaces
+        "no-unused-vars": "off",
+        "no-dupe-class-members": "off",
+        "@typescript-eslint/no-dupe-class-members": "error",
+        "no-undef": "off",
+        "no-redeclare": "off",
+      },
+    },
+    {
       files: [
         "packages/*/src/**/*.js",
+        "packages/*/src/**/*.ts",
         "codemods/*/src/**/*.js",
+        "codemods/*/src/**/*.ts",
         "eslint/*/src/**/*.js",
+        "eslint/*/src/**/*.ts",
       ],
       rules: {
         "@babel/development/no-undefined-identifier": "error",
@@ -35,10 +52,15 @@ module.exports = {
     {
       files: [
         "packages/*/test/**/*.js",
+        "packages/*/test/**/*.ts",
         "codemods/*/test/**/*.js",
+        "codemods/*/test/**/*.ts",
         "eslint/*/test/**/*.js",
+        "eslint/*/test/**/*.ts",
         "packages/babel-helper-transform-fixture-test-runner/src/helpers.js",
+        "packages/babel-helper-transform-fixture-test-runner/src/helpers.ts",
         "test/**/*.js",
+        "test/**/*.ts",
       ],
       env: {
         jest: true,
@@ -53,8 +75,14 @@ module.exports = {
       },
     },
     {
-      files: ["packages/babel-plugin-*/src/index.js"],
-      excludedFiles: ["packages/babel-plugin-transform-regenerator/**/*.js"],
+      files: [
+        "packages/babel-plugin-*/src/index.js",
+        "packages/babel-plugin-*/src/index.ts",
+      ],
+      excludedFiles: [
+        "packages/babel-plugin-transform-regenerator/**/*.js",
+        "packages/babel-plugin-transform-regenerator/**/*.ts",
+      ],
       rules: {
         "@babel/development/plugin-name": "error",
         eqeqeq: ["error", "always", { null: "ignore" }],

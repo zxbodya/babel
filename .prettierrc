@@ -11,14 +11,19 @@
   "overrides": [{
     "files": [
       "**/codemods/*/src/**/*.js",
+      "**/codemods/*/src/**/*.ts",
       "**/codemods/*/test/**/*.js",
+      "**/codemods/*/test/**/*.ts",
       "**/packages/*/src/**/*.js",
+      "**/packages/*/src/**/*.ts",
       "**/packages/*/test/**/*.js",
+      "**/packages/*/test/**/*.ts",
       "**/eslint/*/src/**/*.js",
-      "**/eslint/*/test/**/*.js"
+      "**/eslint/*/src/**/*.ts",
+      "**/eslint/*/test/**/*.js",
+      "**/eslint/*/test/**/*.ts"
     ],
     "options": {
-      "parser": "babel",
       "trailingComma": "all"
     }
   }]
