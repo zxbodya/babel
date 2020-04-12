@@ -6,7 +6,7 @@ export interface NodePathValidators {
   // ------------------------- isXXX -------------------------
   isArrayExpression(opts?: object): this is NodePath<t.ArrayExpression>;
   isAssignmentExpression(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.AssignmentExpression>;
   isBinaryExpression(opts?: object): this is NodePath<t.BinaryExpression>;
   isDirective(opts?: object): this is NodePath<t.Directive>;
@@ -16,7 +16,7 @@ export interface NodePathValidators {
   isCallExpression(opts?: object): this is NodePath<t.CallExpression>;
   isCatchClause(opts?: object): this is NodePath<t.CatchClause>;
   isConditionalExpression(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ConditionalExpression>;
   isContinueStatement(opts?: object): this is NodePath<t.ContinueStatement>;
   isDebuggerStatement(opts?: object): this is NodePath<t.DebuggerStatement>;
@@ -60,28 +60,28 @@ export interface NodePathValidators {
   isAssignmentPattern(opts?: object): this is NodePath<t.AssignmentPattern>;
   isArrayPattern(opts?: object): this is NodePath<t.ArrayPattern>;
   isArrowFunctionExpression(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ArrowFunctionExpression>;
   isClassBody(opts?: object): this is NodePath<t.ClassBody>;
   isClassDeclaration(opts?: object): this is NodePath<t.ClassDeclaration>;
   isClassExpression(opts?: object): this is NodePath<t.ClassExpression>;
   isExportAllDeclaration(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ExportAllDeclaration>;
   isExportDefaultDeclaration(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ExportDefaultDeclaration>;
   isExportNamedDeclaration(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ExportNamedDeclaration>;
   isExportSpecifier(opts?: object): this is NodePath<t.ExportSpecifier>;
   isForOfStatement(opts?: object): this is NodePath<t.ForOfStatement>;
   isImportDeclaration(opts?: object): this is NodePath<t.ImportDeclaration>;
   isImportDefaultSpecifier(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ImportDefaultSpecifier>;
   isImportNamespaceSpecifier(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ImportNamespaceSpecifier>;
   isImportSpecifier(opts?: object): this is NodePath<t.ImportSpecifier>;
   isMetaProperty(opts?: object): this is NodePath<t.MetaProperty>;
@@ -90,7 +90,7 @@ export interface NodePathValidators {
   isSpreadElement(opts?: object): this is NodePath<t.SpreadElement>;
   isSuper(opts?: object): this is NodePath<t.Super>;
   isTaggedTemplateExpression(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.TaggedTemplateExpression>;
   isTemplateElement(opts?: object): this is NodePath<t.TemplateElement>;
   isTemplateLiteral(opts?: object): this is NodePath<t.TemplateLiteral>;
@@ -98,16 +98,20 @@ export interface NodePathValidators {
   isAnyTypeAnnotation(opts?: object): this is NodePath<t.AnyTypeAnnotation>;
   isArrayTypeAnnotation(opts?: object): this is NodePath<t.ArrayTypeAnnotation>;
   isBooleanTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.BooleanTypeAnnotation>;
   isBooleanLiteralTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.BooleanLiteralTypeAnnotation>;
   isNullLiteralTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.NullLiteralTypeAnnotation>;
   isClassImplements(opts?: object): this is NodePath<t.ClassImplements>;
   isClassProperty(opts?: object): this is NodePath<t.ClassProperty>;
+  isClassPrivateMethod(opts?: object): this is NodePath<t.ClassPrivateMethod>;
+  isClassPrivateProperty(
+    opts?: object,
+  ): this is NodePath<t.ClassPrivateProperty>;
   isDeclareClass(opts?: object): this is NodePath<t.DeclareClass>;
   isDeclareFunction(opts?: object): this is NodePath<t.DeclareFunction>;
   isDeclareInterface(opts?: object): this is NodePath<t.DeclareInterface>;
@@ -115,65 +119,66 @@ export interface NodePathValidators {
   isDeclareTypeAlias(opts?: object): this is NodePath<t.DeclareTypeAlias>;
   isDeclareVariable(opts?: object): this is NodePath<t.DeclareVariable>;
   isFunctionTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.FunctionTypeAnnotation>;
   isFunctionTypeParam(opts?: object): this is NodePath<t.FunctionTypeParam>;
   isGenericTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.GenericTypeAnnotation>;
   isInterfaceExtends(opts?: object): this is NodePath<t.InterfaceExtends>;
   isInterfaceDeclaration(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.InterfaceDeclaration>;
   isIntersectionTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.IntersectionTypeAnnotation>;
   isMixedTypeAnnotation(opts?: object): this is NodePath<t.MixedTypeAnnotation>;
   isNullableTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.NullableTypeAnnotation>;
   isNumberTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.NumberTypeAnnotation>;
   isStringLiteralTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.StringLiteralTypeAnnotation>;
   isStringTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.StringTypeAnnotation>;
   isThisTypeAnnotation(opts?: object): this is NodePath<t.ThisTypeAnnotation>;
   isTupleTypeAnnotation(opts?: object): this is NodePath<t.TupleTypeAnnotation>;
   isTypeofTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.TypeofTypeAnnotation>;
   isTypeAlias(opts?: object): this is NodePath<t.TypeAlias>;
   isTypeAnnotation(opts?: object): this is NodePath<t.TypeAnnotation>;
   isTypeCastExpression(opts?: object): this is NodePath<t.TypeCastExpression>;
   isTypeParameterDeclaration(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.TypeParameterDeclaration>;
   isTypeParameterInstantiation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.TypeParameterInstantiation>;
   isObjectTypeAnnotation(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ObjectTypeAnnotation>;
   isObjectTypeCallProperty(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ObjectTypeCallProperty>;
   isObjectTypeIndexer(opts?: object): this is NodePath<t.ObjectTypeIndexer>;
   isObjectTypeProperty(opts?: object): this is NodePath<t.ObjectTypeProperty>;
   isQualifiedTypeIdentifier(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.QualifiedTypeIdentifier>;
   isUnionTypeAnnotation(opts?: object): this is NodePath<t.UnionTypeAnnotation>;
   isVoidTypeAnnotation(opts?: object): this is NodePath<t.VoidTypeAnnotation>;
   isJSXAttribute(opts?: object): this is NodePath<t.JSXAttribute>;
   isJSXClosingElement(opts?: object): this is NodePath<t.JSXClosingElement>;
   isJSXElement(opts?: object): this is NodePath<t.JSXElement>;
+  isJSXFragment(opts?: object): this is NodePath<t.JSXFragment>;
   isJSXEmptyExpression(opts?: object): this is NodePath<t.JSXEmptyExpression>;
   isJSXExpressionContainer(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.JSXExpressionContainer>;
   isJSXIdentifier(opts?: object): this is NodePath<t.JSXIdentifier>;
   isJSXMemberExpression(opts?: object): this is NodePath<t.JSXMemberExpression>;
@@ -183,17 +188,17 @@ export interface NodePathValidators {
   isJSXText(opts?: object): this is NodePath<t.JSXText>;
   isNoop(opts?: object): this is NodePath<t.Noop>;
   isParenthesizedExpression(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ParenthesizedExpression>;
   isAwaitExpression(opts?: object): this is NodePath<t.AwaitExpression>;
   isBindExpression(opts?: object): this is NodePath<t.BindExpression>;
   isDecorator(opts?: object): this is NodePath<t.Decorator>;
   isDoExpression(opts?: object): this is NodePath<t.DoExpression>;
   isExportDefaultSpecifier(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ExportDefaultSpecifier>;
   isExportNamespaceSpecifier(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.ExportNamespaceSpecifier>;
   isRestProperty(opts?: object): this is NodePath<t.RestProperty>;
   isSpreadProperty(opts?: object): this is NodePath<t.SpreadProperty>;
@@ -225,6 +230,7 @@ export interface NodePathValidators {
   isUnaryLike(opts?: object): this is NodePath<t.UnaryLike>;
   isPattern(opts?: object): this is NodePath<t.Pattern>;
   isClass(opts?: object): this is NodePath<t.Class>;
+  isClassDeclaration(opts?: object): this is NodePath<t.ClassDeclaration>;
   isModuleDeclaration(opts?: object): this is NodePath<t.ModuleDeclaration>;
   isExportDeclaration(opts?: object): this is NodePath<t.ExportDeclaration>;
   isModuleSpecifier(opts?: object): this is NodePath<t.ModuleSpecifier>;
@@ -235,16 +241,16 @@ export interface NodePathValidators {
   isNumberLiteral(opts?: object): this is NodePath<t.NumericLiteral>;
   isRegexLiteral(opts?: object): this is NodePath<t.RegExpLiteral>;
   isReferencedIdentifier(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.Identifier | t.JSXIdentifier>;
   isReferencedMemberExpression(
-    opts?: object
+    opts?: object,
   ): this is NodePath<t.MemberExpression>;
   isBindingIdentifier(opts?: object): this is NodePath<t.Identifier>;
   isScope(opts?: object): this is NodePath<t.Scopable>;
   isReferenced(opts?: object): boolean;
   isBlockScoped(
-    opts?: object
+    opts?: object,
   ): this is NodePath<
     t.FunctionDeclaration | t.ClassDeclaration | t.VariableDeclaration
   >;
@@ -252,4 +258,17 @@ export interface NodePathValidators {
   isUser(opts?: object): boolean;
   isGenerated(opts?: object): boolean;
   isPure(opts?: object): boolean;
+  isTSTypeAliasDeclaration(
+    opts?: object,
+  ): this is NodePath<t.TSTypeAliasDeclaration>;
+  isTSDeclareFunction(opts?: object): this is NodePath<t.TSDeclareFunction>;
+  isTSInterfaceDeclaration(
+    opts?: object,
+  ): this is NodePath<t.TSInterfaceDeclaration>;
+  isTSEnumDeclaration(opts?: object): this is NodePath<t.TSEnumDeclaration>;
+  isTSModuleDeclaration(opts?: object): this is NodePath<t.TSModuleDeclaration>;
+  isPrivate(opts?: object): this is NodePath<t.Private>;
+  isOptionalCallExpression(
+    opts?: object,
+  ): this is NodePath<t.OptionalCallExpression>;
 }
