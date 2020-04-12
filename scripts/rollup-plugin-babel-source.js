@@ -22,10 +22,9 @@ module.exports = function () {
           typeof packageJson["browser"] === "object"
         ) {
           for (const nodeFile in packageJson["browser"]) {
-            const browserFile = packageJson["browser"][nodeFile].replace(
-              /^(\.\/)?lib\//,
-              "src/"
-            ).replace(/.js$/, ".ts");
+            const browserFile = packageJson["browser"][nodeFile]
+              .replace(/^(\.\/)?lib\//, "src/")
+              .replace(/.js$/, ".ts");
             const nodeFileSrc = path.normalize(
               nodeFile.replace(/^(\.\/)?lib\//, "src/").replace(/.js$/, ".ts")
             );
