@@ -18,6 +18,9 @@
     },
     {
       "path": "./packages/babel-parser"
+    },
+    {
+      "path": "./packages/babel-generator"
     }
   ]
 }
