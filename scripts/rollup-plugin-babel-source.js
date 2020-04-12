@@ -25,9 +25,9 @@ module.exports = function () {
             const browserFile = packageJson["browser"][nodeFile].replace(
               /^(\.\/)?lib\//,
               "src/"
-            );
+            ).replace(/.js$/, ".ts");
             const nodeFileSrc = path.normalize(
-              nodeFile.replace(/^(\.\/)?lib\//, "src/")
+              nodeFile.replace(/^(\.\/)?lib\//, "src/").replace(/.js$/, ".ts")
             );
             if (id.endsWith(nodeFileSrc)) {
               if (browserFile === false) {
@@ -85,7 +85,7 @@ module.exports = function () {
         path.join(
           packageFolder,
           // replace lib with src in the package.json entry
-          filename.replace(/^(\.\/)?lib\//, "src/")
+          filename.replace(/^(\.\/)?lib\//, "src/").replace(/.js$/, ".ts")
         )
       );
     },

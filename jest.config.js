@@ -2,16 +2,19 @@ module.exports = {
   collectCoverageFrom: [
     "packages/*/src/**/*.mjs",
     "packages/*/src/**/*.js",
+    "packages/*/src/**/*.ts",
     "codemods/*/src/**/*.mjs",
     "codemods/*/src/**/*.js",
+    "codemods/*/src/**/*.ts",
     "eslint/*/src/**/*.mjs",
     "eslint/*/src/**/*.js",
+    "eslint/*/src/**/*.ts",
   ],
   // The eslint/* packages use ESLint v6, which has dropped support for Node v6.
   // TODO: Remove this process.version check in Babel 8.
   testRegex: `./(packages|codemods${
     Number(process.versions.node.split(".")[0]) < 10 ? "" : "|eslint"
-  })/[^/]+/test/.+\\.m?js$`,
+  })/[^/]+/test/.+\\.m?[tj]s$`,
   testPathIgnorePatterns: [
     "/node_modules/",
     "/test/fixtures/",
@@ -21,8 +24,10 @@ module.exports = {
     "/test/__data__/",
     "/test/helpers/",
     "<rootDir>/test/warning\\.js",
+    "<rootDir>/test/warning\\.ts",
     "<rootDir>/build/",
     "_browser\\.js",
+    "_browser\\.ts",
   ],
   testEnvironment: "node",
   setupFilesAfterEnv: ["<rootDir>/test/testSetupFile.js"],

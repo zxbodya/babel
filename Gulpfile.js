@@ -19,7 +19,7 @@ const rollupNodeResolve = require("@rollup/plugin-node-resolve").default;
 const rollupReplace = require("@rollup/plugin-replace");
 const { terser: rollupTerser } = require("rollup-plugin-terser");
 
-const defaultSourcesGlob = "./@(codemods|packages|eslint)/*/src/**/*.js";
+const defaultSourcesGlob = "./@(codemods|packages|eslint)/*/src/**/*.{js,ts}";
 
 function swapSrcWithLib(srcPath) {
   const parts = srcPath.split(path.sep);
@@ -28,7 +28,7 @@ function swapSrcWithLib(srcPath) {
 }
 
 function getIndexFromPackage(name) {
-  return `${name}/src/index.js`;
+  return `${name}/src/index.ts`;
 }
 
 function compilationLogger() {
@@ -121,9 +121,20 @@ function buildRollup(packages) {
             babelrc: false,
             babelHelpers: "bundled",
             extends: "./babel.config.js",
+            extensions: [".js", ".mjs", ".jsx", ".mjs", ".js", ".ts", ".tsx"],
           }),
           rollupNodeResolve({
             browser: nodeResolveBrowser,
+            extensions: [
+              ".js",
+              ".mjs",
+              ".jsx",
+              ".mjs",
+              ".js",
+              ".ts",
+              ".tsx",
+              ".json",
+            ],
             preferBuiltins: true,
             //todo: remove when semver and source-map are bumped to latest versions
             dedupe(importee) {
