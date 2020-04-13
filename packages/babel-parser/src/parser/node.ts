@@ -32,7 +32,7 @@ const NodePrototype = Node.prototype;
 if (!process.env.BABEL_8_BREAKING) {
   // @ts-ignore todo($FlowIgnore)
   NodePrototype.__clone = function (): Node {
-    // @ts-ignore todo($FlowIgnore)
+    // @ts-ignore todo($FlowIgnore) todo(flow->ts) required constructor arguments are missing
     const newNode: any = new Node();
     const keys = Object.keys(this);
     for (let i = 0, length = keys.length; i < length; i++) {
@@ -90,19 +90,19 @@ export function cloneStringLiteral(node: any): any {
   return cloned;
 }
 
-export class NodeUtils extends UtilParser {
+export abstract class NodeUtils extends UtilParser {
   startNode<T extends NodeType>(): T {
-    // @ts-ignore todo($FlowIgnore)
+    // @ts-ignore todo($FlowIgnore) todo(flow->ts): do not expose whole parser to Node
     return new Node(this, this.state.start, this.state.startLoc);
   }
 
   startNodeAt<T extends NodeType>(pos: number, loc: Position): T {
-    // @ts-ignore todo($FlowIgnore)
+    // @ts-ignore todo($FlowIgnore) todo(flow->ts): do not expose whole parser to Node
     return new Node(this, pos, loc);
   }
 
   /** Start a new node with a previous node's location. */
-  startNodeAtNode<T extends NodeType>(type: NodeType): T {
+  startNodeAtNode<T extends NodeType>(type: T): T {
     return this.startNodeAt(type.start, type.loc.start);
   }
 

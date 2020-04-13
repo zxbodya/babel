@@ -14,10 +14,7 @@ import ProductionParameterHandler, {
 import { Errors, ErrorCodes } from "./error";
 import type { ErrorTemplate } from "./error";
 import type { ParsingError } from "./error";
-
-/*::
 import type ScopeHandler from "../util/scope";
-*/
 
 type TryParse<Node, Error, Thrown, Aborted, FailState> = {
   node: Node;
@@ -29,11 +26,9 @@ type TryParse<Node, Error, Thrown, Aborted, FailState> = {
 
 // ## Parser utilities
 
-export default class UtilParser extends Tokenizer {
+export default abstract class UtilParser extends Tokenizer {
   // Forward-declaration: defined in parser/index.js
-  /*::
-  +getScopeHandler: () => Class<ScopeHandler<*>>;
-  */
+  abstract getScopeHandler(): { new (...args: any): ScopeHandler };
 
   // TODO
 
@@ -181,7 +176,7 @@ export default class UtilParser extends Tokenizer {
     /* eslint-enable @babel/development-internal/dry-error-messages */
   }
 
-  expectPlugin(name: string, pos?: number | null): true {
+  expectPlugin(name: string, pos?: number | null): true | never {
     if (!this.hasPlugin(name)) {
       throw this.raiseWithData(
         pos != null ? pos : this.state.start,

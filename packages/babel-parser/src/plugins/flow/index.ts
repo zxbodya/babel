@@ -20,11 +20,13 @@ import {
   SCOPE_ARROW,
   SCOPE_FUNCTION,
   SCOPE_OTHER,
+  BIND_NONE,
 } from "../../util/scopeflags";
 import type { BindingTypes } from "../../util/scopeflags";
 import type { ExpressionErrors } from "../../parser/util";
 import { Errors, makeErrorTemplates, ErrorCodes } from "../../parser/error";
 import { cloneIdentifier } from "../../parser/node";
+import type { Expression } from "../../types";
 
 const reservedTypes = new Set([
   "_",
@@ -215,12 +217,8 @@ type EnumMemberInit =
       pos: number;
     };
 
-export default (superClass: {
-  new (...args: any): Parser;
-}): {
-  new (...args: any): Parser;
-} =>
-  class extends superClass {
+export default (superClass: typeof Parser) =>
+  class FlowParserMixin extends superClass implements Parser {
     // The value of the @flow/@noflow pragma. Initially undefined, transitions
     // to "@flow" or "@noflow" if we see a pragma. Transitions to null if we are
     // past the initial comment.
@@ -350,9 +348,9 @@ export default (superClass: {
       this.expect(tt.parenR);
 
       [
-        // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
+        // todo($FlowFixMe) (destructuring not supported yet)
         typeNode.returnType,
-        // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
+        // todo($FlowFixMe) (destructuring not supported yet)
         node.predicate,
       ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -549,7 +547,7 @@ export default (superClass: {
             // flow does not support the ExportNamedDeclaration
             // @ts-ignore todo($FlowIgnore)
             node.type = "ExportDeclaration";
-            // @ts-expect-error todo($FlowFixMe)
+            // todo($FlowFixMe)
             node.default = false;
             delete node.exportKind;
           }
@@ -1823,7 +1821,7 @@ export default (superClass: {
         const typeNode = this.startNode();
 
         [
-          // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
+          // todo($FlowFixMe) (destructuring not supported yet)
           typeNode.typeAnnotation,
           // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
           node.predicate,
@@ -2180,7 +2178,7 @@ export default (superClass: {
     }
 
     eatExportStar(node: N.Node): boolean {
-      if (super.eatExportStar(...arguments)) return true;
+      if (super.eatExportStar(node)) return true;
 
       if (this.isContextual("type") && this.lookahead().type === tt.star) {
         node.exportKind = "type";
@@ -2363,19 +2361,22 @@ export default (superClass: {
     }
 
     checkLVal(
-      expr: N.Expression,
-      ...args:
-        | [string, BindingTypes | void]
-        | [
-            string,
-            BindingTypes | void,
-            Set<string> | undefined | null,
-            boolean | void,
-            boolean | void,
-          ]
+      expr: Expression,
+      contextDescription: string,
+      bindingType: BindingTypes = BIND_NONE,
+      checkClashes?: Set<string> | null,
+      disallowLetBinding?: boolean,
+      strictModeChanged: boolean = false,
     ): void {
       if (expr.type !== "TypeCastExpression") {
-        return super.checkLVal(expr, ...args);
+        return super.checkLVal(
+          expr,
+          contextDescription,
+          bindingType,
+          checkClashes,
+          disallowLetBinding,
+          strictModeChanged,
+        );
       }
     }
 
@@ -2958,7 +2959,7 @@ export default (superClass: {
           const typeNode = this.startNode();
 
           [
-            // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
+            // todo($FlowFixMe) (destructuring not supported yet)
             typeNode.typeAnnotation,
             // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
             node.predicate,
@@ -3005,6 +3006,7 @@ export default (superClass: {
       node: N.Function,
       allowDuplicates: boolean,
       isArrowFunction?: boolean | null,
+      strictModeChanged: boolean = true,
     ): void {
       if (
         isArrowFunction &&
@@ -3020,7 +3022,12 @@ export default (superClass: {
         }
       }
 
-      return super.checkParams(...arguments);
+      return super.checkParams(
+        node,
+        allowDuplicates,
+        isArrowFunction,
+        strictModeChanged,
+      );
     }
 
     parseParenAndDistinguishExpression(canBeArrow: boolean): N.Expression {
@@ -3451,7 +3458,7 @@ export default (superClass: {
       const id = this.parseIdentifier(true);
       const init = this.eat(tt.eq)
         ? this.flowEnumMemberInit()
-        : { type: "none", pos };
+        : { type: "none" as const, pos };
       return { id, init };
     }
 
