@@ -12,6 +12,9 @@
     },
     {
       "path": "./packages/babel-types"
+    },
+    {
+      "path": "./packages/babel-helper-fixtures"
     }
   ]
 }
