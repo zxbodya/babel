@@ -3,6 +3,9 @@
   "references": [
     {
       "path": "./packages/babel-helper-validator-identifier"
+    },
+    {
+      "path": "./packages/babel-highlight"
     }
   ]
 }
