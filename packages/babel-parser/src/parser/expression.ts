@@ -848,7 +848,7 @@ export default abstract class ExpressionParser extends LValParser {
     dynamicImport?: boolean,
     allowPlaceholder?: boolean,
     nodeForExtra?: N.Node | null,
-  ): ReadonlyArray<N.Expression | undefined | null> {
+  ): Array<N.Expression | undefined | null> {
     const elts = [];
     let innerParenStart;
     let first = true;

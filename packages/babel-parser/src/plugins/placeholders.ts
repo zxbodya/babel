@@ -175,6 +175,7 @@ export default (superClass: typeof Parser) =>
       node: N.BreakStatement | N.ContinueStatement,
       keyword: string,
     ) {
+      // @ts-ignore todo: Placeholder should be base in parser method signature
       if (node.label && node.label.type === "Placeholder") return;
       super.verifyBreakContinue(node, keyword);
     }
@@ -191,7 +192,7 @@ export default (superClass: typeof Parser) =>
       }
 
       if (this.match(tt.colon)) {
-        const stmt: N.LabeledStatement = node;
+        const stmt = node as N.LabeledStatement;
         stmt.label = this.finishPlaceholder(expr, "Identifier");
         this.next();
         stmt.body = this.parseStatement("label");
@@ -310,7 +311,9 @@ export default (superClass: typeof Parser) =>
       return super.maybeParseExportDefaultSpecifier(node);
     }
 
-    checkExport(node: N.ExportNamedDeclaration): void {
+    checkExport(
+      node: N.Node, // N.ExportNamedDeclaration
+    ): void {
       const { specifiers } = node;
       if (specifiers?.length) {
         node.specifiers = specifiers.filter(

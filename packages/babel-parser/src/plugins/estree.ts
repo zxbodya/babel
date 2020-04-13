@@ -95,6 +95,7 @@ export default (superClass: typeof Parser) =>
 
     checkDeclaration(node: N.Pattern | N.ObjectProperty): void {
       if (isSimpleProperty(node)) {
+        // @ts-ignore todo node types
         this.checkDeclaration(((node as any) as N.EstreeProperty).value);
       } else {
         super.checkDeclaration(node);
@@ -149,7 +150,7 @@ export default (superClass: typeof Parser) =>
       },
       refExpressionErrors?: ExpressionErrors | null,
     ): void {
-      // $FlowIgnore: check prop.method and fallback to super method
+      // @ts-expect-error: check prop.method and fallback to super method
       if (prop.method) {
         return;
       }
@@ -209,7 +210,7 @@ export default (superClass: typeof Parser) =>
         true,
       );
       if (method.typeParameters) {
-        // $FlowIgnore
+        // @ts-ignore
         method.value.typeParameters = method.typeParameters;
         delete method.typeParameters;
       }
@@ -252,10 +253,11 @@ export default (superClass: typeof Parser) =>
       startLoc?: Position,
     ): T {
       const node = super.parseLiteral(value, type, startPos, startLoc);
+      // @ts-ignore todo: node types
       node.raw = node.extra.raw;
       delete node.extra;
 
-      return node;
+      return node as T;
     }
 
     parseFunctionBody(
@@ -289,7 +291,7 @@ export default (superClass: typeof Parser) =>
       );
       funcNode.type = "FunctionExpression";
       delete funcNode.kind;
-      // $FlowIgnore
+      // @ts-ignore
       node.value = funcNode;
 
       type = type === "ClassMethod" ? "MethodDefinition" : type;

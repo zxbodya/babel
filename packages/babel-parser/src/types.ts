@@ -53,6 +53,7 @@ export type Pattern =
 export type Declaration =
   | VariableDeclaration
   | ClassDeclaration
+  | ClassExpression
   | FunctionDeclaration
   | TsInterfaceDeclaration
   | TsTypeAliasDeclaration

@@ -300,7 +300,13 @@ export default class StatementParser extends ExpressionParser {
       expr.type === "Identifier" &&
       this.eat(tt.colon)
     ) {
-      return this.parseLabeledStatement(node, maybeName, expr, context);
+      return this.parseLabeledStatement(
+        node,
+        maybeName,
+        // @ts-ignore todo: Node types
+        expr,
+        context,
+      );
     } else {
       return this.parseExpressionStatement(node, expr);
     }
@@ -536,6 +542,7 @@ export default class StatementParser extends ExpressionParser {
         ? "for-of statement"
         : "for-in statement";
       this.checkLVal(init, undefined, undefined, description);
+      // @ts-ignore todo: Node types
       return this.parseForIn(node, init, awaitAt);
     } else {
       this.checkExpressionErrors(refExpressionErrors, true);
@@ -795,7 +802,7 @@ export default class StatementParser extends ExpressionParser {
   }
 
   parseExpressionStatement(
-    node: N.ExpressionStatement,
+    node: N.Node, // N.ExpressionStatement,
     expr: N.Expression,
   ): N.Statement {
     node.expression = expr;
@@ -920,7 +927,7 @@ export default class StatementParser extends ExpressionParser {
   // expression.
 
   parseFor(
-    node: N.ForStatement,
+    node: N.Node,
     init?: N.VariableDeclaration | N.Expression | null,
   ): N.ForStatement {
     node.init = init;
@@ -949,7 +956,7 @@ export default class StatementParser extends ExpressionParser {
   // same from parser's perspective.
 
   parseForIn(
-    node: N.ForInOf,
+    node: N.Node,
     init: N.VariableDeclaration | N.AssignmentPattern,
     awaitAt: number,
   ): N.ForInOf {
@@ -1334,10 +1341,10 @@ export default class StatementParser extends ExpressionParser {
     state: N.ParseClassMemberState,
     isStatic: boolean,
   ) {
-    const publicMethod: N.ClassMethod = member;
-    const privateMethod: N.ClassPrivateMethod = member;
-    const publicProp: N.ClassMethod = member;
-    const privateProp: N.ClassPrivateMethod = member;
+    const publicMethod = member as N.ClassMethod;
+    const privateMethod = member as N.ClassPrivateMethod;
+    const publicProp = member as N.ClassProperty;
+    const privateProp = member as N.ClassPrivateProperty;
 
     const method: typeof publicMethod | typeof privateMethod = publicMethod;
     const publicMember: typeof publicMethod | typeof publicProp = publicMethod;
@@ -1505,8 +1512,8 @@ export default class StatementParser extends ExpressionParser {
     if (
       !member.computed &&
       member.static &&
-      ((key as $FlowSubtype<N.Identifier>).name === "prototype" ||
-        (key as $FlowSubtype<N.StringLiteral>).value === "prototype")
+      ((key as N.Identifier).name === "prototype" ||
+        (key as N.StringLiteral).value === "prototype")
     ) {
       this.raise(key.start, Errors.StaticPrototype);
     }
@@ -1855,10 +1862,8 @@ export default class StatementParser extends ExpressionParser {
   }
 
   // eslint-disable-next-line no-unused-vars
-  parseExportDeclaration(
-    node: N.ExportNamedDeclaration,
-  ): N.Declaration | undefined | null {
-    return this.parseStatement(null);
+  parseExportDeclaration(node: N.Node): N.Declaration | undefined | null {
+    return this.parseStatement(null) as N.Declaration | undefined | null;
   }
 
   isExportDefaultSpecifier(): boolean {
@@ -1909,10 +1914,10 @@ export default class StatementParser extends ExpressionParser {
     return false;
   }
 
-  parseExportFrom(node: N.ExportNamedDeclaration, expect?: boolean): void {
+  parseExportFrom(node: N.Node, expect?: boolean): void {
     if (this.eatContextual("from")) {
       node.source = this.parseImportSource();
-      this.checkExport(node);
+      this.checkExport(node as N.ExportNamedDeclaration);
       const assertions = this.maybeParseImportAssertions();
       if (assertions) {
         node.assertions = assertions;
@@ -1951,7 +1956,7 @@ export default class StatementParser extends ExpressionParser {
   }
 
   checkExport(
-    node: N.ExportNamedDeclaration,
+    node: N.Node, // N.ExportNamedDeclaration,
     checkNames?: boolean,
     isDefault?: boolean,
     isFrom?: boolean,
@@ -1975,7 +1980,7 @@ export default class StatementParser extends ExpressionParser {
         }
       } else if (node.specifiers && node.specifiers.length) {
         // Named exports
-        for (const specifier of node.specifiers) {
+        for (const specifier of node.specifiers as N.ExportSpecifier[]) {
           const { exported } = specifier;
           const exportedName =
             exported.type === "Identifier" ? exported.name : exported.value;
@@ -1983,6 +1988,7 @@ export default class StatementParser extends ExpressionParser {
           // $FlowIgnore
           if (!isFrom && specifier.local) {
             const { local } = specifier;
+            // @ts-expect-error todo(flow->ts) StringLiteral is not expected here
             if (local.type === "StringLiteral") {
               this.raise(
                 specifier.start,
@@ -2040,6 +2046,7 @@ export default class StatementParser extends ExpressionParser {
         }
       }
     } else if (node.type === "ObjectProperty") {
+      // @ts-ignore todo: Node type
       this.checkDeclaration(node.value);
     } else if (node.type === "RestElement") {
       this.checkDeclaration(node.argument);
@@ -2049,12 +2056,12 @@ export default class StatementParser extends ExpressionParser {
   }
 
   checkDuplicateExports(
-    node:
-      | N.Identifier
-      | N.StringLiteral
-      | N.ExportNamedDeclaration
-      | N.ExportSpecifier
-      | N.ExportDefaultSpecifier,
+    node: N.Node,
+    // | N.Identifier
+    // | N.StringLiteral
+    // | N.ExportNamedDeclaration
+    // | N.ExportSpecifier
+    // | N.ExportDefaultSpecifier,
     name: string,
   ): void {
     if (this.state.exportedIdentifiers.indexOf(name) > -1) {
@@ -2165,16 +2172,16 @@ export default class StatementParser extends ExpressionParser {
 
   parseImportSource(): N.StringLiteral {
     if (!this.match(tt.string)) this.unexpected();
-    return this.parseExprAtom();
+    return this.parseExprAtom() as N.StringLiteral;
   }
 
   // eslint-disable-next-line no-unused-vars
-  shouldParseDefaultImport(node: N.ImportDeclaration): boolean {
+  shouldParseDefaultImport(node: N.Node): boolean {
     return this.match(tt.name);
   }
 
   parseImportSpecifierLocal(
-    node: N.ImportDeclaration,
+    node: N.Node, // todo: N.ImportDeclaration,
     specifier: N.Node,
     type: string,
     contextDescription: string,
@@ -2321,7 +2328,8 @@ export default class StatementParser extends ExpressionParser {
     return attrs;
   }
 
-  maybeParseDefaultImportSpecifier(node: N.ImportDeclaration): boolean {
+  // todo(flow->ts): node:N.ImportDeclaration
+  maybeParseDefaultImportSpecifier(node: N.Node): boolean {
     if (this.shouldParseDefaultImport(node)) {
       // import defaultObj, { x, y as z } from '...'
       this.parseImportSpecifierLocal(
@@ -2335,7 +2343,9 @@ export default class StatementParser extends ExpressionParser {
     return false;
   }
 
-  maybeParseStarImportSpecifier(node: N.ImportDeclaration): boolean {
+  maybeParseStarImportSpecifier(
+    node: N.Node, // N.ImportDeclaration
+  ): boolean {
     if (this.match(tt.star)) {
       const specifier = this.startNode();
       this.next();
@@ -2352,7 +2362,7 @@ export default class StatementParser extends ExpressionParser {
     return false;
   }
 
-  parseNamedImportSpecifiers(node: N.ImportDeclaration) {
+  parseNamedImportSpecifiers(node: N.Node) {
     let first = true;
     this.expect(tt.braceL);
     while (!this.eat(tt.braceR)) {
@@ -2368,6 +2378,7 @@ export default class StatementParser extends ExpressionParser {
         if (this.eat(tt.braceR)) break;
       }
 
+      // @ts-ignore todo(flow->ts)
       this.parseImportSpecifier(node);
     }
   }
