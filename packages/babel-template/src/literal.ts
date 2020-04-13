@@ -1,5 +1,6 @@
 import type { Formatter } from "./formatters";
 import { normalizeReplacements } from "./options";
+import type { TemplateReplacements } from "./options";
 import type { TemplateOpts } from "./options";
 import parseAndBuildMetadata from "./parse";
 import populatePlaceholders from "./populate";
@@ -11,11 +12,11 @@ export default function literalTemplate<T>(
 ): (a: Array<unknown>) => (a: unknown) => T {
   const { metadata, names } = buildLiteralData(formatter, tpl, opts);
 
-  return (arg: Array<unknown>) => {
-    const defaultReplacements = arg.reduce((acc, replacement, i) => {
-      acc[names[i]] = replacement;
-      return acc;
-    }, {});
+  return arg => {
+    const defaultReplacements: TemplateReplacements = {};
+    arg.forEach((replacement, i) => {
+      defaultReplacements[names[i]] = replacement;
+    });
 
     return (arg: unknown) => {
       const replacements = normalizeReplacements(arg);

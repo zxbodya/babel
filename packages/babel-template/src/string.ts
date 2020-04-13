@@ -8,7 +8,7 @@ export default function stringTemplate<T>(
   formatter: Formatter<T>,
   code: string,
   opts: TemplateOpts,
-): (a: unknown) => T {
+): (arg?: unknown) => T {
   code = formatter.code(code);
 
   let metadata;

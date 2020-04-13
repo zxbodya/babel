@@ -1,11 +1,20 @@
 import * as formatters from "./formatters";
 import createTemplateBuilder from "./builder";
+import type * as t from "@babel/types";
 
-export const smart = createTemplateBuilder<any>(formatters.smart);
-export const statement = createTemplateBuilder<any>(formatters.statement);
-export const statements = createTemplateBuilder<any>(formatters.statements);
-export const expression = createTemplateBuilder<any>(formatters.expression);
-export const program = createTemplateBuilder<any>(formatters.program);
+export const smart = createTemplateBuilder<t.Statement | t.Statement[]>(
+  formatters.smart,
+);
+export const statement = createTemplateBuilder<t.Statement>(
+  formatters.statement,
+);
+export const statements = createTemplateBuilder<t.Statement[]>(
+  formatters.statements,
+);
+export const expression = createTemplateBuilder<t.Expression>(
+  formatters.expression,
+);
+export const program = createTemplateBuilder<t.Program>(formatters.program);
 
 type DefaultTemplateBuilder = typeof smart & {
   smart: typeof smart;
@@ -16,14 +25,11 @@ type DefaultTemplateBuilder = typeof smart & {
   ast: typeof smart.ast;
 };
 
-export default Object.assign(
-  (smart.bind(undefined) as any) as DefaultTemplateBuilder,
-  {
-    smart,
-    statement,
-    statements,
-    expression,
-    program,
-    ast: smart.ast,
-  },
-);
+export default Object.assign(smart.bind(undefined), {
+  smart,
+  statement,
+  statements,
+  expression,
+  program,
+  ast: smart.ast,
+}) as DefaultTemplateBuilder;

@@ -5,19 +5,31 @@ import type { Formatter } from "./formatters";
 import stringTemplate from "./string";
 import literalTemplate from "./literal";
 
-export type TemplateBuilder<T> = {
+export interface TemplateBuilder<T> {
   // Allow users to explicitly create templates that produce ASTs, skipping
   // the need for an intermediate function.
   ast: {
-    (tpl: string, opts?: PublicOpts | null): T;
-    (tpl: Array<string>, ...args: Array<unknown>): T;
+    (tpl: string, opts?: PublicOpts): T;
+    (tpl: TemplateStringsArray, ...args: Array<any>): T;
   };
+
+  /**
+   * Build a new builder, merging the given options with the previous ones.
+   */
   (opts: PublicOpts): TemplateBuilder<T>;
-  (tpl: string, opts?: PublicOpts | null): (a?: PublicReplacements | null) => T;
-  (tpl: Array<string>, ...args: Array<unknown>): (
-    a?: PublicReplacements | null,
+
+  /**
+   * Building from a string produces an AST builder function by default.
+   */
+  (tpl: string, opts?: PublicOpts): (arg?: PublicReplacements) => T;
+
+  /**
+   * Building from a template literal produces an AST builder function by default.
+   */
+  (tpl: TemplateStringsArray, ...args: Array<any>): (
+    a?: PublicReplacements,
   ) => T;
-};
+}
 
 // Prebuild the options that will be used when parsing a `.ast` template.
 // These do not use a pattern because there is no way for users to pass in
@@ -36,55 +48,49 @@ export default function createTemplateBuilder<T>(
   const templateAstCache = new WeakMap();
   const cachedOpts = defaultOpts || validate(null);
 
-  return Object.assign(
-    ((tpl, ...args) => {
-      if (typeof tpl === "string") {
-        if (args.length > 1) throw new Error("Unexpected extra params.");
-        return extendedTrace(
-          stringTemplate(formatter, tpl, merge(cachedOpts, validate(args[0]))),
-        );
-      } else if (Array.isArray(tpl)) {
-        let builder = templateFnCache.get(tpl);
-        if (!builder) {
-          builder = literalTemplate(formatter, tpl, cachedOpts);
-          templateFnCache.set(tpl, builder);
-        }
-        return extendedTrace(builder(args));
-      } else if (typeof tpl === "object" && tpl) {
-        if (args.length > 0) throw new Error("Unexpected extra params.");
-        return createTemplateBuilder(
-          formatter,
-          merge(cachedOpts, validate(tpl)),
-        );
+  const ret = (tpl, ...args) => {
+    if (typeof tpl === "string") {
+      if (args.length > 1) throw new Error("Unexpected extra params.");
+      return extendedTrace(
+        stringTemplate(formatter, tpl, merge(cachedOpts, validate(args[0]))),
+      );
+    } else if (Array.isArray(tpl)) {
+      let builder = templateFnCache.get(tpl);
+      if (!builder) {
+        builder = literalTemplate(formatter, tpl, cachedOpts);
+        templateFnCache.set(tpl, builder);
       }
-      throw new Error(`Unexpected template param ${typeof tpl}`);
-    }) as Function,
-    {
-      ast: (tpl, ...args) => {
-        if (typeof tpl === "string") {
-          if (args.length > 1) throw new Error("Unexpected extra params.");
-          return stringTemplate(
-            formatter,
-            tpl,
-            merge(merge(cachedOpts, validate(args[0])), NO_PLACEHOLDER),
-          )();
-        } else if (Array.isArray(tpl)) {
-          let builder = templateAstCache.get(tpl);
-          if (!builder) {
-            builder = literalTemplate(
-              formatter,
-              tpl,
-              merge(cachedOpts, NO_PLACEHOLDER),
-            );
-            templateAstCache.set(tpl, builder);
-          }
-          return builder(args)();
-        }
+      return extendedTrace(builder(args));
+    } else if (typeof tpl === "object" && tpl) {
+      if (args.length > 0) throw new Error("Unexpected extra params.");
+      return createTemplateBuilder(formatter, merge(cachedOpts, validate(tpl)));
+    }
+    throw new Error(`Unexpected template param ${typeof tpl}`);
+  };
+  ret.ast = (tpl, ...args) => {
+    if (typeof tpl === "string") {
+      if (args.length > 1) throw new Error("Unexpected extra params.");
+      return stringTemplate(
+        formatter,
+        tpl,
+        merge(merge(cachedOpts, validate(args[0])), NO_PLACEHOLDER),
+      )();
+    } else if (Array.isArray(tpl)) {
+      let builder = templateAstCache.get(tpl);
+      if (!builder) {
+        builder = literalTemplate(
+          formatter,
+          tpl,
+          merge(cachedOpts, NO_PLACEHOLDER),
+        );
+        templateAstCache.set(tpl, builder);
+      }
+      return builder(args)();
+    }
 
-        throw new Error(`Unexpected template param ${typeof tpl}`);
-      },
-    },
-  );
+    throw new Error(`Unexpected template param ${typeof tpl}`);
+  };
+  return ret as TemplateBuilder<T>;
 }
 
 function extendedTrace<Arg, Result>(

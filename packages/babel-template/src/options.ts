@@ -1,19 +1,15 @@
-import type { Options as ParserOpts } from "@babel/parser/src/options";
+import type { Options as ParserOpts } from "@babel/parser";
 
 export type { ParserOpts };
 
-/**
- * These are the options that 'babel-template' actually accepts and typechecks
- * when called. All other options are passed through to the parser.
- */
-export type PublicOpts = {
+export interface PublicOpts {
   /**
    * A set of placeholder names to automatically accept, ignoring the given
    * pattern entirely.
    *
    * This option can be used when using %%foo%% style placeholders.
    */
-  placeholderWhitelist?: Set<string> | null;
+  placeholderWhitelist?: Set<string>;
   /**
    * A pattern to search for when looking for Identifier and StringLiteral
    * nodes that can be replaced.
@@ -25,12 +21,12 @@ export type PublicOpts = {
    *
    * This option can be used when using %%foo%% style placeholders.
    */
-  placeholderPattern?: RegExp | false | null;
+  placeholderPattern?: RegExp | false;
   /**
    * 'true' to pass through comments from the template into the resulting AST,
    * or 'false' to automatically discard comments. Defaults to 'false'.
    */
-  preserveComments?: boolean | null;
+  preserveComments?: boolean;
   /**
    * 'true' to use %%foo%% style placeholders, 'false' to use legacy placeholders
    * described by placeholderPattern or placeholderWhitelist.
@@ -38,14 +34,14 @@ export type PublicOpts = {
    * otherwise as 'false'.
    */
   syntacticPlaceholders?: boolean | null;
-};
+}
 
 export type TemplateOpts = {
   parser: ParserOpts;
-  placeholderWhitelist: Set<string> | void;
-  placeholderPattern: RegExp | false | void;
-  preserveComments: boolean | void;
-  syntacticPlaceholders: boolean | void;
+  placeholderWhitelist?: Set<string>;
+  placeholderPattern?: RegExp | false;
+  preserveComments?: boolean;
+  syntacticPlaceholders?: boolean;
 };
 
 export function merge(a: TemplateOpts, b: TemplateOpts): TemplateOpts {
@@ -79,7 +75,7 @@ export function validate(opts: unknown): TemplateOpts {
     preserveComments,
     syntacticPlaceholders,
     ...parser
-  } = opts || {};
+  } = opts || ({} as any);
 
   if (placeholderWhitelist != null && !(placeholderWhitelist instanceof Set)) {
     throw new Error(

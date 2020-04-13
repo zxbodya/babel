@@ -1,11 +1,13 @@
+import type * as t from "@babel/types";
+
 export type Formatter<T> = {
   code: (a: string) => string;
-  validate: (a: BabelNodeFile) => void;
-  unwrap: (a: BabelNodeFile) => T;
+  validate: (a: t.File) => void;
+  unwrap: (a: t.File) => T;
 };
 
 function makeStatementFormatter<T>(
-  fn: (a: Array<BabelNodeStatement>) => T,
+  fn: (a: Array<t.Statement>) => T,
 ): Formatter<T> {
   return {
     // We need to prepend a ";" to force statement parsing so that
@@ -15,14 +17,14 @@ function makeStatementFormatter<T>(
     // where the random semicolon came from.
     code: str => `/* @babel/template */;\n${str}`,
     validate: () => {},
-    unwrap: (ast: BabelNodeFile): T => {
+    unwrap: (ast: t.File): T => {
       return fn(ast.program.body.slice(1));
     },
   };
 }
 
 export const smart: Formatter<
-  Array<BabelNodeStatement> | BabelNodeStatement
+  Array<t.Statement> | t.Statement
 > = makeStatementFormatter(body => {
   if (body.length > 1) {
     return body;
@@ -31,11 +33,11 @@ export const smart: Formatter<
   }
 });
 
-export const statements: Formatter<Array<
-  BabelNodeStatement
->> = makeStatementFormatter(body => body);
+export const statements: Formatter<Array<t.Statement>> = makeStatementFormatter(
+  body => body,
+);
 
-export const statement: Formatter<BabelNodeStatement> = makeStatementFormatter(
+export const statement: Formatter<t.Statement> = makeStatementFormatter(
   body => {
     // We do this validation when unwrapping since the replacement process
     // could have added or removed statements.
@@ -50,23 +52,23 @@ export const statement: Formatter<BabelNodeStatement> = makeStatementFormatter(
   },
 );
 
-export const expression: Formatter<BabelNodeExpression> = {
+export const expression: Formatter<t.Expression> = {
   code: str => `(\n${str}\n)`,
   validate: ({ program }) => {
     if (program.body.length > 1) {
       throw new Error("Found multiple statements but wanted one");
     }
-    // $FlowFixMe
+    // @ts-expect-error todo(flow->ts): consider adding assertion that body[0] indeed has expression statement
     const expression = program.body[0].expression;
     if (expression.start === 0) {
       throw new Error("Parse result included parens.");
     }
   },
-  // $FlowFixMe
+  // @ts-expect-error todo(flow->ts): consider adding assertion that body[0] indeed has expression statement
   unwrap: ast => ast.program.body[0].expression,
 };
 
-export const program: Formatter<BabelNodeProgram> = {
+export const program: Formatter<t.Program> = {
   code: str => str,
   validate: () => {},
   unwrap: ast => ast.program,
