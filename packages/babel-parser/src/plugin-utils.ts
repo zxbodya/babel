@@ -1,4 +1,53 @@
-export type Plugin = string | [string, any];
+export type Plugin =
+  | "asyncGenerators"
+  | "bigInt"
+  | "classPrivateMethods"
+  | "classPrivateProperties"
+  | "classProperties"
+  | "decorators"
+  | "decorators-legacy"
+  | "doExpressions"
+  | "dynamicImport"
+  | "estree"
+  | "exportDefaultFrom"
+  | "exportNamespaceFrom" // deprecated
+  | "flow"
+  | "flowComments"
+  | "functionBind"
+  | "functionSent"
+  | "importMeta"
+  | "jsx"
+  | "logicalAssignment"
+  | "nullishCoalescingOperator"
+  | "numericSeparator"
+  | "objectRestSpread"
+  | "optionalCatchBinding"
+  | "optionalChaining"
+  | "partialApplication"
+  | "pipelineOperator"
+  | "placeholders"
+  | "throwExpressions"
+  | "topLevelAwait"
+  | "typescript"
+  | "v8intrinsic"
+  | ParserPluginWithOptions;
+
+export type ParserPluginWithOptions =
+  | ["decorators", DecoratorsPluginOptions]
+  | ["pipelineOperator", PipelineOperatorPluginOptions]
+  | ["flow", FlowPluginOptions];
+
+export interface DecoratorsPluginOptions {
+  decoratorsBeforeExport?: boolean;
+}
+
+export interface PipelineOperatorPluginOptions {
+  proposal: "minimal" | "smart";
+}
+
+export interface FlowPluginOptions {
+  all?: boolean;
+}
 
 export type PluginList = ReadonlyArray<Plugin>;
 

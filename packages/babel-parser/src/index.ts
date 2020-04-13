@@ -11,8 +11,12 @@ import Parser from "./parser";
 import { types as tokTypes } from "./tokenizer/types";
 import "./tokenizer/context";
 
+// todo: improve export types
 import type { Expression, File } from "./types";
 
+/**
+ * Parse the provided code as an entire ECMAScript program.
+ */
 export function parse(input: string, options?: Options): File {
   if (options?.sourceType === "unambiguous") {
     options = {
@@ -57,6 +61,9 @@ export function parse(input: string, options?: Options): File {
   }
 }
 
+/**
+ * Parse the provided code as a single expression.
+ */
 export function parseExpression(input: string, options?: Options): Expression {
   const parser = getParser(options, input);
   if (parser.options.strictMode) {

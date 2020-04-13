@@ -6,19 +6,70 @@ import type { PluginList } from "./plugin-utils";
 export type SourceType = "script" | "module" | "unambiguous";
 
 export type Options = {
+  /**
+   * Indicate the mode the code should be parsed in.
+   * Can be one of "script", "module", or "unambiguous". Defaults to "script".
+   * "unambiguous" will make @babel/parser attempt to guess, based on the presence
+   * of ES6 import or export statements.
+   * Files with ES6 imports and exports are considered "module" and are otherwise "script".
+   */
   sourceType: SourceType;
+  /**
+   * Correlate output AST nodes with their source filename.
+   * Useful when generating code and source maps from the ASTs of multiple input files.
+   */
   sourceFilename?: string;
-  startLine: number;
-  allowAwaitOutsideFunction: boolean;
-  allowReturnOutsideFunction: boolean;
-  allowImportExportEverywhere: boolean;
+  /**
+   * By default, the first line of code parsed is treated as line 1.
+   * You can provide a line number to alternatively start with.
+   * Useful for integration with other source tools.
+   */
+  startLine?: number;
+  /**
+   * By default, await use is not allowed outside of an async function.
+   * Set this to true to accept such code.
+   */
+  allowAwaitOutsideFunction?: boolean;
+  /**
+   * By default, a return statement at the top level raises an error.
+   * Set this to true to accept such code.
+   */
+  allowReturnOutsideFunction?: boolean;
+  /**
+   * By default, import and export declarations can only appear at a program's top level.
+   * Setting this option to true allows them anywhere where a statement is allowed.
+   */
+  allowImportExportEverywhere?: boolean;
   allowSuperOutsideMethod: boolean;
-  allowUndeclaredExports: boolean;
-  plugins: PluginList;
-  strictMode: boolean | undefined | null;
-  ranges: boolean;
-  tokens: boolean;
-  createParenthesizedExpressions: boolean;
+  /**
+   * By default, exported identifiers must refer to a declared variable.
+   * Set this to true to allow export statements to reference undeclared variables.
+   */
+  allowUndeclaredExports?: boolean;
+  /**
+   * Array containing the plugins that you want to enable.
+   */
+  plugins?: PluginList;
+  /**
+   * Should the parser work in strict mode.
+   * Defaults to true if sourceType === 'module'. Otherwise, false.
+   */
+  strictMode?: boolean;
+  /**
+   * Adds a ranges property to each node: [node.start, node.end]
+   */
+  ranges?: boolean;
+  /**
+   * Adds all parsed tokens to a tokens property on the File node.
+   */
+  tokens?: boolean;
+  /**
+   * By default, the parser adds information about parentheses by setting
+   * `extra.parenthesized` to `true` as needed.
+   * When this option is `true` the parser creates `ParenthesizedExpression`
+   * AST nodes instead of using the `extra` property.
+   */
+  createParenthesizedExpressions?: boolean;
   errorRecovery: boolean;
 };
 
