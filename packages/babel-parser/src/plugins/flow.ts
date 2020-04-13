@@ -121,7 +121,7 @@ const FlowErrors = Object.freeze({
   UnsupportedStatementInDeclareModule:
     "Only declares and type imports are allowed inside declare module",
   UnterminatedFlowComment: "Unterminated flow-comment",
-});
+} as const);
 /* eslint-disable sort-keys */
 
 function isEsModuleType(bodyElement: N.Node): boolean {
@@ -200,12 +200,8 @@ type EnumMemberInit =
       pos: number;
     };
 
-export default (superClass: {
-  new (...args: any): Parser;
-}): {
-  new (...args: any): Parser;
-} =>
-  class extends superClass {
+export default (superClass: typeof Parser) =>
+  class FlowParserMixin extends superClass implements Parser {
     // The value of the @flow/@noflow pragma. Initially undefined, transitions
     // to "@flow" or "@noflow" if we see a pragma. Transitions to null if we are
     // past the initial comment.
@@ -1731,7 +1727,7 @@ export default (superClass: {
     }
 
     parseFunctionBodyAndFinish(
-      node: N.BodilessFunctionOrMethodBase,
+      node: N.FunctionBase,
       type: string,
       isMethod: boolean = false,
     ): void {
@@ -1739,9 +1735,7 @@ export default (superClass: {
         const typeNode = this.startNode();
 
         [
-          // $FlowFixMe (destructuring not supported yet)
           typeNode.typeAnnotation,
-          // $FlowFixMe (destructuring not supported yet)
           node.predicate,
         ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -2095,7 +2089,7 @@ export default (superClass: {
     }
 
     eatExportStar(node: N.Node): boolean {
-      if (super.eatExportStar(...arguments)) return true;
+      if (super.eatExportStar(node)) return true;
 
       if (this.isContextual("type") && this.lookahead().type === tt.star) {
         node.exportKind = "type";
@@ -2857,9 +2851,7 @@ export default (superClass: {
           const typeNode = this.startNode();
 
           [
-            // $FlowFixMe (destructuring not supported yet)
             typeNode.typeAnnotation,
-            // $FlowFixMe (destructuring not supported yet)
             node.predicate,
           ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -2904,6 +2896,7 @@ export default (superClass: {
       node: N.Function,
       allowDuplicates: boolean,
       isArrowFunction?: boolean | null,
+      strictModeChanged?: boolean,
     ): void {
       if (
         isArrowFunction &&
@@ -2912,7 +2905,12 @@ export default (superClass: {
         return;
       }
 
-      return super.checkParams(...arguments);
+      return super.checkParams(
+        node,
+        allowDuplicates,
+        isArrowFunction,
+        strictModeChanged,
+      );
     }
 
     parseParenAndDistinguishExpression(canBeArrow: boolean): N.Expression {
@@ -3339,7 +3337,7 @@ export default (superClass: {
     } {
       const pos = this.state.start;
       const id = this.parseIdentifier(true);
-      const init = this.eat(tt.eq)
+      const init: EnumMemberInit = this.eat(tt.eq)
         ? this.flowEnumMemberInit()
         : { type: "none", pos };
       return { id, init };

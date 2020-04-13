@@ -7,7 +7,7 @@ import { BIND_NONE } from "../util/scopeflags";
 import type { BindingTypes } from "../util/scopeflags";
 import { Errors } from "../parser/error";
 
-function isSimpleProperty(node: N.Node): boolean {
+function isSimpleProperty(node: any): node is N.EstreeProperty {
   return (
     node != null &&
     node.type === "Property" &&
@@ -16,12 +16,8 @@ function isSimpleProperty(node: N.Node): boolean {
   );
 }
 
-export default (superClass: {
-  new (...args: any): Parser;
-}): {
-  new (...args: any): Parser;
-} =>
-  class extends superClass {
+export default (superClass: typeof Parser) =>
+  class ESTreeParserMixin extends superClass implements Parser {
     estreeParseRegExpLiteral({ pattern, flags }: N.RegExpLiteral): N.Node {
       let regex = null;
       try {
@@ -92,10 +88,7 @@ export default (superClass: {
     // Overrides
     // ==================================
 
-    initFunction(
-      node: N.BodilessFunctionOrMethodBase,
-      isAsync?: boolean | null,
-    ): void {
+    initFunction(node: N.FunctionBase, isAsync?: boolean | null): void {
       super.initFunction(node, isAsync);
       node.expression = false;
     }
@@ -194,8 +187,7 @@ export default (superClass: {
       const directiveStatements = node.directives.map(d =>
         this.directiveToStmt(d),
       );
-      node.body = directiveStatements.concat(node.body);
-      // $FlowIgnore - directives isn't optional in the type definition
+      node.body = [...directiveStatements, ...node.body];
       delete node.directives;
     }
 
@@ -407,7 +399,7 @@ export default (superClass: {
       super.toReferencedArguments(node);
     }
 
-    parseExport(node: N.Node) {
+    parseExport(node: N.Node): N.AnyExport {
       super.parseExport(node);
 
       switch (node.type) {
@@ -428,7 +420,7 @@ export default (superClass: {
           break;
       }
 
-      return node;
+      return node as N.AnyExport;
     }
 
     parseSubscript(

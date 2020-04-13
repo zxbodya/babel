@@ -34,8 +34,9 @@ import {
   newParameterDeclarationScope,
 } from "../util/expression-scope";
 
-const loopLabel = { kind: "loop" },
-  switchLabel = { kind: "switch" };
+// todo: export label type
+const loopLabel: any = { kind: "loop" },
+  switchLabel: any = { kind: "switch" };
 
 const FUNC_NO_FLAGS = 0b000,
   FUNC_STATEMENT = 0b001,
@@ -1333,10 +1334,10 @@ export default class StatementParser extends ExpressionParser {
     state: N.ParseClassMemberState,
     isStatic: boolean,
   ) {
-    const publicMethod: $FlowSubtype<N.ClassMethod> = member;
-    const privateMethod: $FlowSubtype<N.ClassPrivateMethod> = member;
-    const publicProp: $FlowSubtype<N.ClassMethod> = member;
-    const privateProp: $FlowSubtype<N.ClassPrivateMethod> = member;
+    const publicMethod: N.ClassMethod = member;
+    const privateMethod: N.ClassPrivateMethod = member;
+    const publicProp: N.ClassMethod = member;
+    const privateProp: N.ClassPrivateMethod = member;
 
     const method: typeof publicMethod | typeof privateMethod = publicMethod;
     const publicMember: typeof publicMethod | typeof publicProp = publicMethod;

@@ -31,7 +31,7 @@ export class Scope {
   }
 }
 
-type raiseFunction = (b: number, a: string) => void;
+type raiseFunction = (b: number, a: string, ...params: any[]) => void;
 
 // The functions in this module keep track of declared variables in the
 // current scope in order to detect duplicate variable names.
@@ -73,6 +73,7 @@ export default class ScopeHandler<IScope extends Scope = Scope> {
   /*:: +createScope: (flags: ScopeFlags) => IScope; */
 
   enter(flags: ScopeFlags) {
+    // @ts-ignore todo: bug when using typescript scope
     this.scopeStack.push(this.createScope(flags));
   }
 

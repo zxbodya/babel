@@ -1,5 +1,5 @@
 import type { Options } from "../options";
-import type { File /*::, JSXOpeningElement */ } from "../types";
+import type * as N from "../types";
 import type { PluginList } from "../plugin-utils";
 import { getOptions } from "../options";
 import StatementParser from "./statement";
@@ -10,6 +10,7 @@ import ExpressionScopeHandler from "../util/expression-scope";
 import ProductionParameterHandler, {
   PARAM_AWAIT,
   PARAM,
+  ParamKind,
 } from "../util/production-parameter";
 
 export type PluginsMap = Map<
@@ -50,13 +51,13 @@ export default class Parser extends StatementParser {
     return ScopeHandler;
   }
 
-  parse(): File {
+  parse(): N.File {
     let paramFlags = PARAM;
     if (this.hasPlugin("topLevelAwait") && this.inModule) {
       paramFlags |= PARAM_AWAIT;
     }
     this.scope.enter(SCOPE_PROGRAM);
-    this.prodParam.enter(paramFlags);
+    this.prodParam.enter(paramFlags as ParamKind);
     const file = this.startNode();
     const program = this.startNode();
     this.nextToken();

@@ -29,7 +29,7 @@ class Node implements NodeBase {
   };
 
   __clone(): this {
-    // $FlowIgnore
+    // @ts-ignore
     const newNode: any = new Node();
     const keys = Object.keys(this);
     for (let i = 0, length = keys.length; i < length; i++) {
@@ -50,24 +50,27 @@ class Node implements NodeBase {
 }
 
 export class NodeUtils extends UtilParser {
-  startNode<T extends NodeType>(): T {
-    // $FlowIgnore
+  // @ts-ignore todo: extends NodeType and return T not any
+  startNode<T extends any>(): any {
+    // @ts-ignore todo: do not expose whole parser to Node
     return new Node(this, this.state.start, this.state.startLoc);
   }
 
-  startNodeAt<T extends NodeType>(pos: number, loc: Position): T {
-    // $FlowIgnore
+  // @ts-ignore todo: extends NodeType and return T not any
+  startNodeAt<T extends any>(pos: number, loc: Position): any {
+    // @ts-ignore todo: do not expose whole parser to Node
     return new Node(this, pos, loc);
   }
 
   /** Start a new node with a previous node's location. */
-  startNodeAtNode<T extends NodeType>(type: NodeType): T {
+  // @ts-ignore todo: extends NodeType and return T not any
+  startNodeAtNode<T extends any>(type: T): any {
     return this.startNodeAt(type.start, type.loc.start);
   }
 
   // Finish an AST node, adding `type` and `end` properties.
-
-  finishNode<T extends NodeType>(node: T, type: string): T {
+  // @ts-ignore todo: extends NodeType and return T not any
+  finishNode<T extends any>(node: T, type: string): any {
     return this.finishNodeAt(
       node,
       type,
@@ -77,13 +80,13 @@ export class NodeUtils extends UtilParser {
   }
 
   // Finish node at given position
-
-  finishNodeAt<T extends NodeType>(
+  // @ts-ignore todo: extends NodeType and return T not any
+  finishNodeAt<T extends any>(
     node: T,
     type: string,
     pos: number,
     loc: Position,
-  ): T {
+  ): any {
     if (process.env.NODE_ENV !== "production" && node.end > 0) {
       throw new Error(
         "Do not call finishNode*() twice on the same node." +
@@ -94,6 +97,7 @@ export class NodeUtils extends UtilParser {
     node.end = pos;
     node.loc.end = loc;
     if (this.options.ranges) node.range[1] = pos;
+    // @ts-ignore todo:
     this.processComment(node);
     return node;
   }

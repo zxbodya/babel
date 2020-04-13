@@ -47,6 +47,7 @@ import {
   PARAM_RETURN,
   PARAM,
   functionFlags,
+  ParamKind,
 } from "../util/production-parameter";
 import {
   newArrowHeadScope,
@@ -55,29 +56,31 @@ import {
 } from "../util/expression-scope";
 import { Errors } from "./error";
 
-export default class ExpressionParser extends LValParser {
+export default abstract class ExpressionParser extends LValParser {
   // Forward-declaration: defined in statement.js
-  /*::
-  +parseBlock: (
+  abstract parseBlock(
     allowDirectives?: boolean,
     createNewLexicalScope?: boolean,
     afterBlockParse?: (hasStrictModeDirective: boolean) => void,
-  ) => N.BlockStatement;
-  +parseClass: (
+  ): N.BlockStatement;
+  abstract parseClass(
     node: N.Class,
     isStatement: boolean,
     optionalId?: boolean,
-  ) => N.Class;
-  +parseDecorators: (allowExport?: boolean) => void;
-  +parseFunction: <T: N.NormalFunction>(
+  ): N.Class;
+  abstract parseDecorators(allowExport?: boolean): void;
+  abstract parseDecorator(): N.Decorator;
+  abstract parseFunction<T extends N.NormalFunction>(
     node: T,
     statement?: number,
     allowExpressionBody?: boolean,
     isAsync?: boolean,
-  ) => T;
-  +parseFunctionParams: (node: N.Function, allowModifiers?: boolean) => void;
-  +takeDecorators: (node: N.HasDecorators) => void;
-  */
+  ): T;
+  abstract parseFunctionParams(
+    node: N.Function,
+    allowModifiers?: boolean,
+  ): void;
+  abstract takeDecorators(node: N.HasDecorators): void;
 
   // For object literal, check if property __proto__ has been used more than once.
   // If the expression is a destructuring assignment, then __proto__ may appear
@@ -140,7 +143,7 @@ export default class ExpressionParser extends LValParser {
       paramFlags |= PARAM_AWAIT;
     }
     this.scope.enter(SCOPE_PROGRAM);
-    this.prodParam.enter(paramFlags);
+    this.prodParam.enter(paramFlags as ParamKind);
     this.nextToken();
     const expr = this.parseExpression();
     if (!this.match(tt.eof)) {
@@ -1625,7 +1628,7 @@ export default class ExpressionParser extends LValParser {
 
       const prop = this.parsePropertyDefinition(isPattern, refExpressionErrors);
       if (!isPattern) {
-        // $FlowIgnore RestElement will never be returned if !isPattern
+        // @ts-ignore RestElement will never be returned if !isPattern
         this.checkProto(prop, isRecord, propHash, refExpressionErrors);
       }
 
@@ -1637,7 +1640,7 @@ export default class ExpressionParser extends LValParser {
         this.raise(prop.start, Errors.InvalidRecordProperty);
       }
 
-      // $FlowIgnore
+      // @ts-ignore todo: proper type refinement
       if (prop.shorthand) {
         this.addExtra(prop, "shorthand", true);
       }
@@ -1899,7 +1902,7 @@ export default class ExpressionParser extends LValParser {
   }
 
   parseObjPropValue(
-    prop: any,
+    prop: N.ObjectMember,
     startPos: number | undefined | null,
     startLoc: Position | undefined | null,
     isGenerator: boolean,
@@ -1910,14 +1913,14 @@ export default class ExpressionParser extends LValParser {
   ): void {
     const node =
       this.parseObjectMethod(
-        prop,
+        prop as N.ObjectMethod,
         isGenerator,
         isAsync,
         isPattern,
         isAccessor,
       ) ||
       this.parseObjectProperty(
-        prop,
+        prop as N.ObjectProperty,
         startPos,
         startLoc,
         isPattern,
@@ -1925,9 +1928,6 @@ export default class ExpressionParser extends LValParser {
       );
 
     if (!node) this.unexpected();
-
-    // $FlowFixMe
-    return node;
   }
 
   parsePropertyName(
@@ -1935,7 +1935,7 @@ export default class ExpressionParser extends LValParser {
     isPrivateNameAllowed: boolean,
   ): N.Expression | N.Identifier {
     if (this.eat(tt.bracketL)) {
-      (prop as $FlowSubtype<N.ObjectOrClassMember>).computed = true;
+      (prop as N.ObjectOrClassMember).computed = true;
       prop.key = this.parseMaybeAssignAllowIn();
       this.expect(tt.bracketR);
     } else {
@@ -1963,10 +1963,7 @@ export default class ExpressionParser extends LValParser {
 
   // Initialize empty function node.
 
-  initFunction(
-    node: N.BodilessFunctionOrMethodBase,
-    isAsync?: boolean | null,
-  ): void {
+  initFunction(node: N.FunctionBase, isAsync?: boolean | null): void {
     node.id = null;
     node.generator = false;
     node.async = !!isAsync;
@@ -2072,11 +2069,11 @@ export default class ExpressionParser extends LValParser {
   }
 
   parseFunctionBodyAndFinish(
-    node: N.BodilessFunctionOrMethodBase,
+    node: N.FunctionBase,
     type: string,
     isMethod: boolean = false,
   ): void {
-    // $FlowIgnore (node is not bodiless if we get here)
+    // @ts-ignore (node is not bodiless if we get here)
     this.parseFunctionBody(node, false, isMethod);
     this.finishNode(node, type);
   }
@@ -2103,7 +2100,9 @@ export default class ExpressionParser extends LValParser {
 
       // FunctionBody[Yield, Await]:
       //   StatementList[?Yield, ?Await, +Return] opt
-      this.prodParam.enter(this.prodParam.currentFlags() | PARAM_RETURN);
+      this.prodParam.enter(
+        (this.prodParam.currentFlags() | PARAM_RETURN) as ParamKind,
+      );
       node.body = this.parseBlock(
         true,
         false,
@@ -2114,11 +2113,12 @@ export default class ExpressionParser extends LValParser {
           if (hasStrictModeDirective && nonSimple) {
             // This logic is here to align the error location with the ESTree plugin.
             const errorPos =
-              // $FlowIgnore
+              // @ts-ignore
               (node.kind === "method" || node.kind === "constructor") &&
-              // $FlowIgnore
+              // @ts-ignore
               !!node.key
-                ? node.key.end
+                ? // todo: as any
+                  (node as any).key.end
                 : node.start;
             this.raise(errorPos, Errors.IllegalLanguageModeDirective);
           }
@@ -2194,7 +2194,7 @@ export default class ExpressionParser extends LValParser {
     allowEmpty?: boolean,
     refExpressionErrors?: ExpressionErrors | null,
     nodeForExtra?: N.Node | null,
-  ): ReadonlyArray<N.Expression | undefined | null> {
+  ): Array<N.Expression | undefined | null> {
     const elts = [];
     let first = true;
 
@@ -2322,7 +2322,7 @@ export default class ExpressionParser extends LValParser {
     startLoc: number,
     checkKeywords: boolean,
     isBinding: boolean,
-  ): void {
+  ) {
     if (this.prodParam.hasYield && word === "yield") {
       this.raise(startLoc, Errors.YieldBindingIdentifier);
       return;

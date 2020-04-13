@@ -213,4 +213,4 @@ export const ErrorMessages = Object.freeze({
   YieldInParameter: "Yield expression is not allowed in formal parameters",
   ZeroDigitNumericSeparator:
     "Numeric separator can not be used after leading 0",
-});
+} as const);

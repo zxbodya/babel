@@ -18,11 +18,9 @@ type ErrorContext = {
 
 export { ErrorMessages as Errors } from "./error-message";
 
-export default class ParserError extends CommentsParser {
+export default abstract class ParserError extends CommentsParser {
   // Forward-declaration: defined in tokenizer/index.js
-  /*::
-  +isLookahead: boolean;
-  */
+  abstract isLookahead: boolean;
 
   getLocationForPosition(pos: number): Position {
     let loc;
@@ -59,7 +57,7 @@ export default class ParserError extends CommentsParser {
   }
 
   _raise(errorContext: ErrorContext, message: string): Error | never {
-    // $FlowIgnore
+    // @ts-ignore
     const err: SyntaxError & ErrorContext = new SyntaxError(message);
     Object.assign(err, errorContext);
     if (this.options.errorRecovery) {

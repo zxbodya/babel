@@ -9,9 +9,9 @@ import type {
   Pattern,
   RestElement,
   SpreadElement,
-  /*:: Identifier, */
-  /*:: ObjectExpression, */
-  /*:: ObjectPattern, */
+  Identifier,
+  ObjectExpression,
+  ObjectPattern,
 } from "../types";
 import type { Pos, Position } from "../util/location";
 import {
@@ -30,26 +30,30 @@ const unwrapParenthesizedExpression = (node: Node) => {
     : node;
 };
 
-export default class LValParser extends NodeUtils {
+export default abstract class LValParser extends NodeUtils {
   // Forward-declaration: defined in expression.js
-  /*::
-  +parseIdentifier: (liberal?: boolean) => Identifier;
-  +parseMaybeAssignAllowIn: (
-    refExpressionErrors?: ?ExpressionErrors,
+  abstract parseIdentifier(liberal?: boolean): Identifier;
+  abstract parseMaybeAssign(
+    noIn?: boolean | null,
+    refExpressionErrors?: ExpressionErrors | null,
     afterLeftParse?: Function,
-    refNeedsArrowPos?: ?Pos,
-  ) => Expression;
-  +parseObjectLike: <T: ObjectPattern | ObjectExpression>(
+    refNeedsArrowPos?: Pos | null,
+  ): Expression;
+
+  abstract parseMaybeAssignAllowIn(
+    refExpressionErrors?: ExpressionErrors | null,
+    afterLeftParse?: Function,
+    refNeedsArrowPos?: Pos | null,
+  ): Expression;
+
+  abstract parseObjectLike<T extends ObjectPattern | ObjectExpression>(
     close: TokenType,
     isPattern: boolean,
-    isRecord?: ?boolean,
-    refExpressionErrors?: ?ExpressionErrors,
-  ) => T;
-  */
+    isRecord?: boolean | null,
+    refExpressionErrors?: ExpressionErrors | null,
+  ): T;
   // Forward-declaration: defined in statement.js
-  /*::
-  +parseDecorator: () => Decorator;
-  */
+  abstract parseDecorator(): Decorator;
 
   // Convert existing expression atom to assignable pattern
   // if possible.
@@ -101,6 +105,7 @@ export default class LValParser extends NodeUtils {
         break;
 
       case "SpreadElement": {
+        // @ts-ignore todo: Node type as union
         this.checkToRestConversion(node);
 
         node.type = "RestElement";
@@ -192,6 +197,7 @@ export default class LValParser extends NodeUtils {
         }
       }
     }
+    // @ts-ignore todo:
     return exprList;
   }
 
@@ -259,6 +265,7 @@ export default class LValParser extends NodeUtils {
       }
 
       case tt.braceL:
+        // @ts-ignore todo: better node types
         return this.parseObjectLike(tt.braceR, true);
     }
 

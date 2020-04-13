@@ -25,7 +25,8 @@
 import BaseParser from "./base";
 import type { Comment, Node } from "../types";
 
-function last<T>(stack: ReadonlyArray<T>): T {
+// todo: remove any
+function last<T = any>(stack: ReadonlyArray<T>): T {
   return stack[stack.length - 1];
 }
 
@@ -281,6 +282,7 @@ export default class CommentsParser extends BaseParser {
       }
     }
 
+    // @ts-ignore todo: better Node type
     stack.push(node);
   }
 }
