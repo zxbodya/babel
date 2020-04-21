@@ -8,5 +8,8 @@
     "./src/**/*"
   ],
   "references": [
+    {
+      "path": "../babel-helper-validator-identifier"
+    }
   ]
 }
