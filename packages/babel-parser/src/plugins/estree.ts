@@ -7,7 +7,7 @@ import { BIND_NONE } from "../util/scopeflags";
 import type { BindingTypes } from "../util/scopeflags";
 import { Errors } from "../parser/error";
 
-function isSimpleProperty(node: any): node is N.EstreeProperty {
+function isSimpleProperty(node: any): boolean {
   return (
     node != null &&
     node.type === "Property" &&

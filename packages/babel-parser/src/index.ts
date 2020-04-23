@@ -11,9 +11,10 @@ import Parser from "./parser";
 import { types as tokTypes } from "./tokenizer/types";
 import "./tokenizer/context";
 
-// todo: improve export types
+// todo: improve export types use @babel/types
 import type { Expression, File } from "./types";
 
+export type { Options };
 /**
  * Parse the provided code as an entire ECMAScript program.
  */

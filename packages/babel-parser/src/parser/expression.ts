@@ -47,7 +47,6 @@ import {
   PARAM_RETURN,
   PARAM,
   functionFlags,
-  ParamKind,
 } from "../util/production-parameter";
 import {
   newArrowHeadScope,
@@ -55,6 +54,7 @@ import {
   newExpressionScope,
 } from "../util/expression-scope";
 import { Errors } from "./error";
+import type { ParamKind } from "../util/production-parameter";
 
 export default abstract class ExpressionParser extends LValParser {
   // Forward-declaration: defined in statement.js

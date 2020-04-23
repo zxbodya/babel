@@ -3,9 +3,10 @@ import * as charCodes from "charcodes";
 import { types as tt, TokenType } from "../tokenizer/types";
 import type Parser from "../parser";
 import * as N from "../types";
-import { ExpressionErrors } from "../parser/util";
-import { Expression } from "../types";
-import { BIND_NONE, BindingTypes } from "../util/scopeflags";
+import type { ExpressionErrors } from "../parser/util";
+import type { Expression } from "../types";
+import { BIND_NONE } from "../util/scopeflags";
+import type { BindingTypes } from "../util/scopeflags";
 
 tt.placeholder = new TokenType("%%", { startsExpr: true });
 

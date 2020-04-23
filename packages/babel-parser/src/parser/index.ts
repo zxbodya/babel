@@ -10,8 +10,8 @@ import ExpressionScopeHandler from "../util/expression-scope";
 import ProductionParameterHandler, {
   PARAM_AWAIT,
   PARAM,
-  ParamKind,
 } from "../util/production-parameter";
+import type { ParamKind } from "../util/production-parameter";
 
 export type PluginsMap = Map<
   string,

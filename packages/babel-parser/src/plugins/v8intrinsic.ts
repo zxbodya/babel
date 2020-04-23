@@ -1,7 +1,7 @@
 import Parser from "../parser";
 import { types as tt } from "../tokenizer/types";
 import * as N from "../types";
-import { ExpressionErrors } from "../parser/util";
+import type { ExpressionErrors } from "../parser/util";
 
 export default (superClass: typeof Parser) =>
   class V8IntrinsicMixin extends superClass implements Parser {
