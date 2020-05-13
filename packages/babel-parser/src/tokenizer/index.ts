@@ -122,7 +122,7 @@ export default abstract class Tokenizer extends ParserErrors {
     pos?: number | null,
     messageOrType?: string | TokenType,
   ): never;
-  abstract expectPlugin: (name: string, pos?: number | null) => true;
+  abstract expectPlugin(name: string, pos?: number | null): true;
 
   isLookahead: boolean;
 

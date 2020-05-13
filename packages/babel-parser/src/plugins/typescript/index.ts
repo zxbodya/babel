@@ -1498,6 +1498,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
 
       if (result.aborted || !result.node) return undefined;
       if (result.error) this.state = result.failState;
+      // @ts-ignore
       return result.node;
     }
 

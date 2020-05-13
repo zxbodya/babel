@@ -13,7 +13,7 @@ export type Options = {
    * of ES6 import or export statements.
    * Files with ES6 imports and exports are considered "module" and are otherwise "script".
    */
-  sourceType: SourceType;
+  sourceType?: SourceType;
   /**
    * Correlate output AST nodes with their source filename.
    * Useful when generating code and source maps from the ASTs of multiple input files.
@@ -40,7 +40,7 @@ export type Options = {
    * Setting this option to true allows them anywhere where a statement is allowed.
    */
   allowImportExportEverywhere?: boolean;
-  allowSuperOutsideMethod: boolean;
+  allowSuperOutsideMethod?: boolean;
   /**
    * By default, exported identifiers must refer to a declared variable.
    * Set this to true to allow export statements to reference undeclared variables.
@@ -70,7 +70,7 @@ export type Options = {
    * AST nodes instead of using the `extra` property.
    */
   createParenthesizedExpressions?: boolean;
-  errorRecovery: boolean;
+  errorRecovery?: boolean;
 };
 
 export const defaultOptions: Options = {

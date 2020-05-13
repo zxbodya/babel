@@ -64,7 +64,7 @@ export class NodeUtils extends UtilParser {
 
   /** Start a new node with a previous node's location. */
   // @ts-ignore todo: extends NodeType and return T not any
-  startNodeAtNode<T extends any>(type: T): any {
+  startNodeAtNode<T extends any>(type: any /*T*/): any {
     return this.startNodeAt(type.start, type.loc.start);
   }
 
@@ -82,7 +82,7 @@ export class NodeUtils extends UtilParser {
   // Finish node at given position
   // @ts-ignore todo: extends NodeType and return T not any
   finishNodeAt<T extends any>(
-    node: T,
+    node: any /*T*/,
     type: string,
     pos: number,
     loc: Position,
