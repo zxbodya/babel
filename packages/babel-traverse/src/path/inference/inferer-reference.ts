@@ -125,6 +125,7 @@ function inferAnnotationFromBinaryExpression(
   const operator = path.node.operator;
 
   const right = path.get("right").resolve();
+  // @ts-expect-error todo(flow->ts): improve babel-types
   const left = path.get("left").resolve();
 
   let target;
@@ -167,12 +168,12 @@ function inferAnnotationFromBinaryExpression(
   if (!typePath.isLiteral()) return;
 
   // and that it's a string so we can infer it
-  // @ts-ignore todo: value is not defined for NullLiteral
+  // @ts-expect-error todo(flow->ts): value is not defined for NullLiteral and some other
   const typeValue = typePath.node.value;
   if (typeof typeValue !== "string") return;
 
   // turn type value into a type annotation
-  // @ts-ignore todo: verify if typeValue is valid
+  // @ts-expect-error todo(flow->ts): move validation from helper or relax type constraint to just a string
   return t.createTypeAnnotationBasedOnTypeof(typeValue);
 }
 

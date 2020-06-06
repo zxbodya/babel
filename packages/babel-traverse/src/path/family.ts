@@ -122,7 +122,6 @@ export function getCompletionRecords(): NodePath[] {
   return paths;
 }
 
-// todo: string | number
 export function getSibling(key: string): NodePath {
   return NodePath.get({
     parentPath: this.parentPath,
