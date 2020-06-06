@@ -1736,7 +1736,7 @@ export default (superClass: typeof Parser) =>
 
         [
           typeNode.typeAnnotation,
-          // @ts-ignore todo: flow node types
+          // @ts-expect-error todo(flow->ts): flow node types
           node.predicate,
         ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -1780,7 +1780,7 @@ export default (superClass: typeof Parser) =>
       node: N.ExpressionStatement,
       expr: N.Expression,
       // todo: flow node types
-      // return type N.ExpressionStatement
+      // todo: return type N.ExpressionStatement
     ): N.Node {
       if (expr.type === "Identifier") {
         if (expr.name === "declare") {
@@ -1857,7 +1857,7 @@ export default (superClass: typeof Parser) =>
         );
 
         if (!result.node) {
-          // @ts-ignore
+          // @ts-expect-error todo(flow->ts) Property 'pos' does not exist on type 'SyntaxError'
           refNeedsArrowPos.start = result.error.pos || this.state.start;
           return expr;
         }
@@ -1953,7 +1953,7 @@ export default (superClass: typeof Parser) =>
             // This is an arrow expression without ambiguity, so check its parameters
             this.finishArrowValidation(node);
           } else {
-            // @ts-ignore todo: node types
+            // @ts-expect-error todo(flow->ts): node types
             arrows.push(node);
           }
           stack.push(node.body);
@@ -1974,7 +1974,7 @@ export default (superClass: typeof Parser) =>
     }
 
     finishArrowValidation(
-      node: N.Node, // N.ArrowFunctionExpression
+      node: N.Node, // todo: node types, N.ArrowFunctionExpression
     ) {
       this.toAssignableList(
         // node.params is Expression[] instead of $ReadOnlyArray<Pattern> because it
@@ -2070,7 +2070,7 @@ export default (superClass: typeof Parser) =>
           return null;
         } else {
           // export type Foo = Bar;
-          // @ts-ignore todo: node types
+          // @ts-expect-error todo(flow->ts): node types
           return this.flowParseTypeAlias(declarationNode);
         }
       } else if (this.isContextual("opaque")) {
@@ -2079,19 +2079,19 @@ export default (superClass: typeof Parser) =>
         const declarationNode = this.startNode();
         this.next();
         // export opaque type Foo = Bar;
-        // @ts-ignore todo: node types
+        // @ts-expect-error todo(flow->ts): node types
         return this.flowParseOpaqueType(declarationNode, false);
       } else if (this.isContextual("interface")) {
         node.exportKind = "type";
         const declarationNode = this.startNode();
         this.next();
-        // @ts-ignore todo: node types
+        // @ts-expect-error todo(flow->ts): node types
         return this.flowParseInterface(declarationNode);
       } else if (this.shouldParseEnums() && this.isContextual("enum")) {
         node.exportKind = "value";
         const declarationNode = this.startNode();
         this.next();
-        // @ts-ignore todo: node types
+        // @ts-expect-error todo(flow->ts): node types
         return this.flowParseEnumDeclaration(declarationNode);
       } else {
         return super.parseExportDeclaration(node);
@@ -2423,7 +2423,7 @@ export default (superClass: typeof Parser) =>
         node,
         isPrivateNameAllowed,
       ) as N.Identifier;
-      // @ts-ignore ("variance" not defined on TsNamedTypeElementBase)
+      // @ts-expect-error todo(flow->ts) "variance" not defined on TsNamedTypeElementBase
       node.variance = variance;
       return key;
     }
@@ -2661,7 +2661,7 @@ export default (superClass: typeof Parser) =>
 
     // parse function type parameters - function foo<T>() {}
     parseFunctionParams(node: N.Function, allowModifiers?: boolean): void {
-      // @ts-ignore
+      // @ts-expect-error todo(flow->ts)
       const kind = node.kind;
       if (kind !== "get" && kind !== "set" && this.isRelational("<")) {
         node.typeParameters = this.flowParseTypeParameterDeclaration();
@@ -2865,7 +2865,7 @@ export default (superClass: typeof Parser) =>
 
           [
             typeNode.typeAnnotation,
-            // @ts-ignore todo: node types
+            // @ts-expect-error todo(flow->ts): node types
             node.predicate,
           ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -2900,7 +2900,7 @@ export default (superClass: typeof Parser) =>
       params: N.Expression[],
     ): void {
       if (this.state.noArrowParamsConversionAt.indexOf(node.start) !== -1) {
-        // @ts-ignore todo: node types
+        // @ts-expect-error todo(flow->ts): node types
         node.params = params;
       } else {
         super.setArrowFunctionParameters(node, params);
@@ -3118,7 +3118,7 @@ export default (superClass: typeof Parser) =>
           this.unexpected(null, FlowErrors.NestedFlowComment);
         }
         this.hasFlowCommentCompletion();
-        // @ts-ignore todo: improve types
+        // @ts-expect-error todo(flow->ts): improve types
         this.state.pos += this.skipFlowComment();
         this.state.hasFlowComment = true;
         return;

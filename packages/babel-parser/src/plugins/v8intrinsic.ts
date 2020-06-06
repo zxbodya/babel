@@ -14,7 +14,7 @@ export default (superClass: typeof Parser) =>
         if (this.match(tt.name)) {
           const name = this.parseIdentifierName(this.state.start);
           const identifier = this.createIdentifier(node, name);
-          // @ts-ignore
+          // @ts-expect-error todo(flow->ts) avoid mutations
           identifier.type = "V8IntrinsicIdentifier";
           if (this.match(tt.parenL)) {
             return identifier;

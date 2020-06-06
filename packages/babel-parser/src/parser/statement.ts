@@ -303,7 +303,7 @@ export default class StatementParser extends ExpressionParser {
       return this.parseLabeledStatement(
         node,
         maybeName,
-        // @ts-ignore todo: Node types
+        // @ts-expect-error todo(flow->ts): node types
         expr,
         context,
       );
@@ -542,7 +542,7 @@ export default class StatementParser extends ExpressionParser {
         ? "for-of statement"
         : "for-in statement";
       this.checkLVal(init, undefined, undefined, description);
-      // @ts-ignore todo: Node types
+      // @ts-expect-error todo(flow->ts): node types
       return this.parseForIn(node, init, awaitAt);
     } else {
       this.checkExpressionErrors(refExpressionErrors, true);
@@ -2046,7 +2046,7 @@ export default class StatementParser extends ExpressionParser {
         }
       }
     } else if (node.type === "ObjectProperty") {
-      // @ts-ignore todo: Node type
+      // @ts-expect-error todo(flow->ts): node type
       this.checkDeclaration(node.value);
     } else if (node.type === "RestElement") {
       this.checkDeclaration(node.argument);
@@ -2057,6 +2057,7 @@ export default class StatementParser extends ExpressionParser {
 
   checkDuplicateExports(
     node: N.Node,
+    // todo: node-types
     // | N.Identifier
     // | N.StringLiteral
     // | N.ExportNamedDeclaration
@@ -2181,7 +2182,7 @@ export default class StatementParser extends ExpressionParser {
   }
 
   parseImportSpecifierLocal(
-    node: N.Node, // todo: N.ImportDeclaration,
+    node: N.Node, // todo: node types N.ImportDeclaration
     specifier: N.Node,
     type: string,
     contextDescription: string,
@@ -2328,7 +2329,7 @@ export default class StatementParser extends ExpressionParser {
     return attrs;
   }
 
-  // todo(flow->ts): node:N.ImportDeclaration
+  // todo(flow->ts): node types :N.ImportDeclaration
   maybeParseDefaultImportSpecifier(node: N.Node): boolean {
     if (this.shouldParseDefaultImport(node)) {
       // import defaultObj, { x, y as z } from '...'
@@ -2344,7 +2345,7 @@ export default class StatementParser extends ExpressionParser {
   }
 
   maybeParseStarImportSpecifier(
-    node: N.Node, // N.ImportDeclaration
+    node: N.Node, // todo: node types N.ImportDeclaration
   ): boolean {
     if (this.match(tt.star)) {
       const specifier = this.startNode();
@@ -2362,6 +2363,7 @@ export default class StatementParser extends ExpressionParser {
     return false;
   }
 
+  // todo: flow->ts node types N.ImportDeclaration
   parseNamedImportSpecifiers(node: N.Node) {
     let first = true;
     this.expect(tt.braceL);

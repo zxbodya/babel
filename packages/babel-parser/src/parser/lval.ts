@@ -105,7 +105,7 @@ export default abstract class LValParser extends NodeUtils {
         break;
 
       case "SpreadElement": {
-        // @ts-ignore todo: Node type as union
+        // @ts-expect-error todo(flow->ts): better node types
         this.checkToRestConversion(node);
 
         node.type = "RestElement";
@@ -197,7 +197,7 @@ export default abstract class LValParser extends NodeUtils {
         }
       }
     }
-    // @ts-ignore todo:
+    // @ts-expect-error todo(flow->ts):
     return exprList;
   }
 
@@ -265,7 +265,7 @@ export default abstract class LValParser extends NodeUtils {
       }
 
       case tt.braceL:
-        // @ts-ignore todo: better node types
+        // @ts-expect-error todo(flow->ts): better node types
         return this.parseObjectLike(tt.braceR, true);
     }
 

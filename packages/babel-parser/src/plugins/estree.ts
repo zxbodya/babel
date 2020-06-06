@@ -95,7 +95,7 @@ export default (superClass: typeof Parser) =>
 
     checkDeclaration(node: N.Pattern | N.ObjectProperty): void {
       if (isSimpleProperty(node)) {
-        // @ts-ignore todo node types
+        // @ts-expect-error todo(flow->ts) node types
         this.checkDeclaration(((node as any) as N.EstreeProperty).value);
       } else {
         super.checkDeclaration(node);
@@ -210,7 +210,7 @@ export default (superClass: typeof Parser) =>
         true,
       );
       if (method.typeParameters) {
-        // @ts-ignore
+        // @ts-expect-error todo(flow->ts)
         method.value.typeParameters = method.typeParameters;
         delete method.typeParameters;
       }
@@ -253,7 +253,7 @@ export default (superClass: typeof Parser) =>
       startLoc?: Position,
     ): T {
       const node = super.parseLiteral(value, type, startPos, startLoc);
-      // @ts-ignore todo: node types
+      // @ts-expect-error todo(flow->ts): node types
       node.raw = node.extra.raw;
       delete node.extra;
 
@@ -291,7 +291,7 @@ export default (superClass: typeof Parser) =>
       );
       funcNode.type = "FunctionExpression";
       delete funcNode.kind;
-      // @ts-ignore
+      // @ts-expect-error todo(flow->ts)
       node.value = funcNode;
 
       type = type === "ClassMethod" ? "MethodDefinition" : type;

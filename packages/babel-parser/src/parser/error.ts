@@ -56,8 +56,9 @@ export default abstract class ParserError extends CommentsParser {
     return this._raise(Object.assign({ loc, pos } as any, data), message);
   }
 
+  // todo(flow->ts): more specific return type
   _raise(errorContext: ErrorContext, message: string): Error | never {
-    // @ts-ignore
+    // @ts-expect-error todo(flow->ts) looks like no longer needed workaround for flow
     const err: SyntaxError & ErrorContext = new SyntaxError(message);
     Object.assign(err, errorContext);
     if (this.options.errorRecovery) {

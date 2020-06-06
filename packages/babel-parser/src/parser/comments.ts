@@ -25,8 +25,7 @@
 import BaseParser from "./base";
 import type { Comment, Node } from "../types";
 
-// todo: remove any
-function last<T = any>(stack: ReadonlyArray<T>): T {
+function last<T>(stack: ReadonlyArray<T>): T {
   return stack[stack.length - 1];
 }
 
@@ -183,7 +182,7 @@ export default class CommentsParser extends BaseParser {
         if (
           lastChild !== node &&
           lastChild.leadingComments.length > 0 &&
-          last(lastChild.leadingComments).end <= node.start
+          last<Comment>(lastChild.leadingComments).end <= node.start
         ) {
           node.leadingComments = lastChild.leadingComments;
           delete lastChild.leadingComments;
@@ -259,7 +258,7 @@ export default class CommentsParser extends BaseParser {
       if (
         trailingComments.length &&
         trailingComments[0].start >= node.start &&
-        last(trailingComments).end <= node.end
+        last<Comment>(trailingComments).end <= node.end
       ) {
         node.innerComments = trailingComments;
       } else {
@@ -282,7 +281,6 @@ export default class CommentsParser extends BaseParser {
       }
     }
 
-    // @ts-ignore todo: better Node type
     stack.push(node);
   }
 }

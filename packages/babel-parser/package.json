@@ -22,7 +22,6 @@
     "directory": "packages/babel-parser"
   },
   "main": "lib/index.js",
-  "types": "typings/babel-parser.d.ts",
   "files": [
     "bin",
     "lib"

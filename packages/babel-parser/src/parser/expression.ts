@@ -1640,7 +1640,7 @@ export default abstract class ExpressionParser extends LValParser {
         this.raise(prop.start, Errors.InvalidRecordProperty);
       }
 
-      // @ts-ignore todo: proper type refinement
+      // @ts-expect-error todo(flow->ts): check node type before checking property which might be missing
       if (prop.shorthand) {
         this.addExtra(prop, "shorthand", true);
       }
@@ -2073,7 +2073,7 @@ export default abstract class ExpressionParser extends LValParser {
     type: string,
     isMethod: boolean = false,
   ): void {
-    // @ts-ignore (node is not bodiless if we get here)
+    // @ts-expect-error todo(flow->ts) node is not bodiless if we get here
     this.parseFunctionBody(node, false, isMethod);
     this.finishNode(node, type);
   }
@@ -2113,9 +2113,9 @@ export default abstract class ExpressionParser extends LValParser {
           if (hasStrictModeDirective && nonSimple) {
             // This logic is here to align the error location with the ESTree plugin.
             const errorPos =
-              // @ts-ignore
+              // @ts-expect-error todo(flow->ts)
               (node.kind === "method" || node.kind === "constructor") &&
-              // @ts-ignore
+              // @ts-expect-error todo(flow->ts)
               !!node.key
                 ? // todo: as any
                   (node as any).key.end

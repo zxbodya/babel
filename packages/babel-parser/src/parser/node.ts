@@ -2,7 +2,7 @@ import type Parser from "./index";
 import UtilParser from "./util";
 import { SourceLocation } from "../util/location";
 import type { Position } from "../util/location";
-import type { Comment, Node as NodeType, NodeBase } from "../types";
+import type { Comment, NodeBase } from "../types";
 
 // Start an AST node, attaching a start offset.
 
@@ -29,7 +29,7 @@ class Node implements NodeBase {
   };
 
   __clone(): this {
-    // @ts-ignore
+    // @ts-expect-error todo(flow->ts) required constructor arguments are missing
     const newNode: any = new Node();
     const keys = Object.keys(this);
     for (let i = 0, length = keys.length; i < length; i++) {
@@ -50,26 +50,26 @@ class Node implements NodeBase {
 }
 
 export class NodeUtils extends UtilParser {
-  // @ts-ignore todo: extends NodeType and return T not any
+  // todo(flow->ts): extends NodeType and return T not any
   startNode<T extends any>(): any {
-    // @ts-ignore todo: do not expose whole parser to Node
+    // @ts-expect-error todo(flow->ts): do not expose whole parser to Node
     return new Node(this, this.state.start, this.state.startLoc);
   }
 
-  // @ts-ignore todo: extends NodeType and return T not any
+  // todo(flow->ts): extends NodeType and return T not any
   startNodeAt<T extends any>(pos: number, loc: Position): any {
-    // @ts-ignore todo: do not expose whole parser to Node
+    // @ts-expect-error todo(flow->ts): do not expose whole parser to Node
     return new Node(this, pos, loc);
   }
 
   /** Start a new node with a previous node's location. */
-  // @ts-ignore todo: extends NodeType and return T not any
+  // todo(flow->ts): extends NodeType and return T not any
   startNodeAtNode<T extends any>(type: any /*T*/): any {
     return this.startNodeAt(type.start, type.loc.start);
   }
 
   // Finish an AST node, adding `type` and `end` properties.
-  // @ts-ignore todo: extends NodeType and return T not any
+  // todo(flow->ts): extends NodeType and return T not any
   finishNode<T extends any>(node: T, type: string): any {
     return this.finishNodeAt(
       node,
@@ -80,7 +80,7 @@ export class NodeUtils extends UtilParser {
   }
 
   // Finish node at given position
-  // @ts-ignore todo: extends NodeType and return T not any
+  // todo(flow->ts): extends NodeType and return T not any
   finishNodeAt<T extends any>(
     node: any /*T*/,
     type: string,
@@ -97,7 +97,6 @@ export class NodeUtils extends UtilParser {
     node.end = pos;
     node.loc.end = loc;
     if (this.options.ranges) node.range[1] = pos;
-    // @ts-ignore todo:
     this.processComment(node);
     return node;
   }

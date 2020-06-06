@@ -73,7 +73,7 @@ export default class ScopeHandler<IScope extends Scope = Scope> {
   /*:: +createScope: (flags: ScopeFlags) => IScope; */
 
   enter(flags: ScopeFlags) {
-    // @ts-ignore todo: bug when using typescript scope
+    // @ts-expect-error todo(flow->ts): improve types to reflect that it is indeed correct scope type
     this.scopeStack.push(this.createScope(flags));
   }
 

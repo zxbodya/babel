@@ -589,7 +589,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
 
     tsParseTypeLiteral(): N.TsTypeLiteral {
       const node: N.TsTypeLiteral = this.startNode();
-      // @ts-ignore node types
+      // @ts-expect-error todo(flow->ts) node types
       node.members = this.tsParseObjectTypeMembers();
       return this.finishNode(node, "TSTypeLiteral");
     }
@@ -601,7 +601,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         this.tsParseTypeMember.bind(this),
       );
       this.expect(tt.braceR);
-      // @ts-ignore node types
+      // @ts-expect-error todo(flow->ts) node types
       return members;
     }
 
@@ -1228,7 +1228,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         this.raise(originalStart, TSErrors.EmptyHeritageClauseType, descriptor);
       }
 
-      // @ts-ignore node types
+      // @ts-expect-error todo(flow->ts) node types
       return delimitedList;
     }
 
@@ -1438,7 +1438,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
     }
 
     tsParseImportEqualsDeclaration(
-      node: N.Node, // N.TsImportEqualsDeclaration,
+      node: N.Node, // todo: node-types, N.TsImportEqualsDeclaration,
       isExport?: boolean,
     ): N.TsImportEqualsDeclaration {
       node.isExport = isExport || false;
@@ -1493,19 +1493,19 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
     tsTryParseAndCatch<T extends N.NodeBase | undefined | null>(
       f: () => T,
     ): T | undefined | null {
-      // @ts-ignore todo:
+      // @ts-expect-error todo(flow->ts):
       const result = this.tryParse(abort => f() || abort());
 
       if (result.aborted || !result.node) return undefined;
       if (result.error) this.state = result.failState;
-      // @ts-ignore
+      // @ts-expect-error todo(flow->ts)
       return result.node;
     }
 
     tsTryParse<T>(f: () => T | undefined | null): T | undefined | null {
       const state = this.state.clone();
       const result = f();
-      // @ts-ignore todo:
+      // @ts-expect-error todo(flow->ts):
       if (result !== undefined && result !== false) {
         return result;
       } else {
@@ -1584,7 +1584,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         case "declare": {
           const declaration = this.tsTryParseDeclare(node);
           if (declaration) {
-            // @ts-ignore todo node types
+            // @ts-expect-error todo(flow->ts) node types
             declaration.declare = true;
             return declaration;
           }
@@ -2058,7 +2058,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         node.importKind = "value";
       }
 
-      // @ts-ignore todo: node types
+      // todo(flow->ts): node types
       const importNode: any = super.parseImport(node);
       /*:: invariant(importNode.type !== "TSImportEqualsDeclaration") */
 
@@ -2185,7 +2185,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
       state: N.ParseClassMemberState,
       isStatic: boolean,
     ): void {
-      // @ts-ignore node types
+      // @ts-expect-error todo(flow->ts) node types
       this.tsParseModifiers(member, ["abstract", "readonly", "declare"]);
 
       const idx = this.tsTryParseIndexSignature(member);
@@ -2216,7 +2216,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
 
       super.parseClassMemberWithIsStatic(
         classBody,
-        // @ts-ignore todo: node types
+        // @ts-expect-error todo(flow->ts): node types
         member,
         state,
         isStatic,
@@ -2250,7 +2250,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         expr.type === "Identifier"
           ? this.tsParseExpressionStatement(
               node,
-              // @ts-ignore todo: node types
+              // @ts-expect-error todo(flow->ts): node types
               expr,
             )
           : undefined;
@@ -2287,7 +2287,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
       );
 
       if (!result.node) {
-        // @ts-ignore
+        // @ts-expect-error todo(flow->ts) `pos` does not exist on SyntaxError
         refNeedsArrowPos.start = result.error.pos || this.state.start;
         return expr;
       }
@@ -2356,7 +2356,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         // Reset location to include `declare` in range
         this.resetStartLocation(declaration, startPos, startLoc);
 
-        // @ts-ignore todo: node types
+        // @ts-expect-error todo(flow->ts): node types
         declaration.declare = true;
       }
 
@@ -2406,17 +2406,17 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
     parseClassPrivateProperty(
       node: N.ClassPrivateProperty,
     ): N.ClassPrivateProperty {
-      // @ts-ignore todo: node types
+      // @ts-expect-error todo(flow->ts): node types
       if (node.abstract) {
         this.raise(node.start, TSErrors.PrivateElementHasAbstract);
       }
 
-      // @ts-ignore todo: node types
+      // @ts-expect-error todo(flow->ts): node types
       if (node.accessibility) {
         this.raise(
           node.start,
           TSErrors.PrivateElementHasAccessibility,
-          // @ts-ignore todo: node types
+          // @ts-expect-error todo(flow->ts): node types
           node.accessibility,
         );
       }
@@ -2717,7 +2717,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
     toAssignable(node: N.Node): N.Node {
       switch (node.type) {
         case "TSTypeCastExpression":
-          // @ts-ignore todo: node types
+          // @ts-expect-error todo(flow->ts): node types
           return super.toAssignable(this.typeCastToParameter(node));
         case "TSParameterProperty":
           return super.toAssignable(node);
@@ -2866,13 +2866,13 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         if (!expr) continue;
         switch (expr.type) {
           case "TSTypeCastExpression":
-            // @ts-ignore todo: node types
+            // @ts-expect-error todo(flow->ts): node types
             exprList[i] = this.typeCastToParameter(expr);
             break;
           case "TSAsExpression":
           case "TSTypeAssertion":
             if (!this.state.maybeInArrowParameters) {
-              // @ts-ignore todo: node types
+              // @ts-expect-error todo(flow->ts): node types
               exprList[i] = this.typeCastToParameter(expr);
             } else {
               this.raise(expr.start, TSErrors.UnexpectedTypeCastInParameter);

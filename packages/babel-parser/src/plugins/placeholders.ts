@@ -176,7 +176,7 @@ export default (superClass: typeof Parser) =>
       node: N.BreakStatement | N.ContinueStatement,
       keyword: string,
     ) {
-      // @ts-ignore todo: Placeholder should be base in parser method signature
+      // @ts-expect-error todo(flow->ts): Placeholder should be base in parser method signature
       if (node.label && node.label.type === "Placeholder") return;
       super.verifyBreakContinue(node, keyword);
     }
