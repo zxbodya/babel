@@ -290,7 +290,6 @@ function _evaluate(path: NodePath, state) {
   }
 
   if (path.isBinaryExpression()) {
-    // @ts-expect-error todo(flow->ts): improve babel-types
     const left = evaluateCached(path.get("left"), state);
     if (!state.confident) return;
     const right = evaluateCached(path.get("right"), state);

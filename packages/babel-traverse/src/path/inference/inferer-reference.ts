@@ -125,7 +125,6 @@ function inferAnnotationFromBinaryExpression(
   const operator = path.node.operator;
 
   const right = path.get("right").resolve();
-  // @ts-expect-error todo(flow->ts): improve babel-types
   const left = path.get("left").resolve();
 
   let target;

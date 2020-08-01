@@ -739,7 +739,7 @@ export default class Scope {
   }
 
   // todo: flow->ts maybe add more specific type
-  addGlobal(node: Extract<t.Node, { name: any }>) {
+  addGlobal(node: Extract<t.Node, { name: string }>) {
     this.globals[node.name] = node;
   }
 
