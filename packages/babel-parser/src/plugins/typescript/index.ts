@@ -680,12 +680,14 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
       let labeledElements = null;
       node.elementTypes.forEach(elementNode => {
         let { type } = elementNode;
-
         if (
           seenOptionalElement &&
           type !== "TSRestType" &&
           type !== "TSOptionalType" &&
-          !(type === "TSNamedTupleMember" && elementNode.optional)
+          !(
+            type === "TSNamedTupleMember" &&
+            (elementNode as N.TsNamedTupleMember).optional
+          )
         ) {
           this.raise(elementNode.start, TSErrors.OptionalTypeBeforeRequired);
         }
@@ -693,12 +695,13 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         // Flow doesn't support ||=
         seenOptionalElement =
           seenOptionalElement ||
-          (type === "TSNamedTupleMember" && elementNode.optional) ||
+          (type === "TSNamedTupleMember" &&
+            (elementNode as N.TsNamedTupleMember).optional) ||
           type === "TSOptionalType";
 
         // When checking labels, check the argument of the spread operator
         if (type === "TSRestType") {
-          elementNode = elementNode.typeAnnotation;
+          elementNode = (elementNode as N.TsRestType).typeAnnotation;
           type = elementNode.type;
         }
 
@@ -740,7 +743,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
           this.raise(type.start, TSErrors.InvalidTupleMemberLabel);
           // This produces an invalid AST, but at least we don't drop
           // nodes representing the invalid source.
-          // $FlowIgnore
+          // @ts-ignore todo(flow->ts)
           labeledNode.label = type;
         }
 
@@ -2476,8 +2479,8 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
       isGenerator: boolean,
       isAsync: boolean,
       isPattern: boolean,
-      refExpressionErrors: ExpressionErrors | undefined | null,
-      containsEsc: boolean,
+      isAccessor: boolean,
+      refExpressionErrors?: ExpressionErrors | null,
     ) {
       const typeParameters = this.tsTryParseTypeParameters();
       if (typeParameters) prop.typeParameters = typeParameters;
@@ -2489,8 +2492,8 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         isGenerator,
         isAsync,
         isPattern,
+        isAccessor,
         refExpressionErrors,
-        containsEsc,
       );
     }
 

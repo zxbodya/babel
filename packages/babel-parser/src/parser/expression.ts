@@ -1538,6 +1538,7 @@ export default abstract class ExpressionParser extends LValParser {
       this.raise(this.state.start, Errors.OptionalChainingNoNew);
     }
 
+    // @ts-ignore todo(flow->ts)
     this.parseNewArguments(node);
     return this.finishNode(node, "NewExpression");
   }

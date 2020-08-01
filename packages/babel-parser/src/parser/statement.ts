@@ -660,6 +660,7 @@ export default class StatementParser extends ExpressionParser {
     this.scope.enter(simple ? SCOPE_SIMPLE_CATCH : 0);
     this.checkLVal(param, BIND_LEXICAL, null, "catch clause");
 
+    // @ts-ignore todo(flow->ts)
     return param;
   }
 

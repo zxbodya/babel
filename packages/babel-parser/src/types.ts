@@ -1217,7 +1217,8 @@ export type TsType =
   | TsMappedType
   | TsLiteralType // TODO: This probably shouldn't be included here.
   | TsImportType
-  | TsTypePredicate;
+  | TsTypePredicate
+  | TsNamedTupleMember;
 
 export type TsTypeBase = NodeBase;
 
