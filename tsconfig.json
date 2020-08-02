@@ -2,6 +2,9 @@
   "files": [],
   "references": [
     {
+      "path": "./packages/babel-helper-skip-transparent-expression-wrappers"
+    },
+    {
       "path": "./packages/babel-helper-validator-identifier"
     },
     {
