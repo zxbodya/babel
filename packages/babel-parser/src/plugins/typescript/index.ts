@@ -2532,7 +2532,6 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
     }
 
     parseMaybeAssign(
-      noIn?: boolean | null,
       refExpressionErrors?: ExpressionErrors | null,
       afterLeftParse?: Function,
       refNeedsArrowPos?: Pos | null,
@@ -2550,7 +2549,6 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         jsx = this.tryParse(
           () =>
             super.parseMaybeAssign(
-              noIn,
               refExpressionErrors,
               afterLeftParse,
               refNeedsArrowPos,
@@ -2574,7 +2572,6 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
 
       if (!jsx?.error && !this.isRelational("<")) {
         return super.parseMaybeAssign(
-          noIn,
           refExpressionErrors,
           afterLeftParse,
           refNeedsArrowPos,
@@ -2590,7 +2587,6 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         // This is similar to TypeScript's `tryParseParenthesizedArrowFunctionExpression`.
         typeParameters = this.tsParseTypeParameters();
         const expr = super.parseMaybeAssign(
-          noIn,
           refExpressionErrors,
           afterLeftParse,
           refNeedsArrowPos,
@@ -2624,7 +2620,6 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
         typeCast = this.tryParse(
           () =>
             super.parseMaybeAssign(
-              noIn,
               refExpressionErrors,
               afterLeftParse,
               refNeedsArrowPos,

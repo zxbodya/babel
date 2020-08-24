@@ -34,7 +34,6 @@ export default abstract class LValParser extends NodeUtils {
   // Forward-declaration: defined in expression.js
   abstract parseIdentifier(liberal?: boolean): Identifier;
   abstract parseMaybeAssign(
-    noIn?: boolean | null,
     refExpressionErrors?: ExpressionErrors | null,
     afterLeftParse?: Function,
     refNeedsArrowPos?: Pos | null,

@@ -55,6 +55,7 @@ import {
 } from "../util/expression-scope";
 import { Errors } from "./error";
 import type { ParamKind } from "../util/production-parameter";
+import { Expression } from "../types";
 
 export default abstract class ExpressionParser extends LValParser {
   // Forward-declaration: defined in statement.js
@@ -2044,6 +2045,7 @@ export default abstract class ExpressionParser extends LValParser {
       flags |= PARAM_IN;
     }
     this.prodParam.enter(flags);
+    // @ts-expect-error todo(flow->ts)
     this.initFunction(node, isAsync);
     const oldMaybeInArrowParameters = this.state.maybeInArrowParameters;
 
@@ -2588,6 +2590,7 @@ export default abstract class ExpressionParser extends LValParser {
     const flags = this.prodParam.currentFlags();
     const prodParamToSet = PARAM_IN & ~flags;
     if (prodParamToSet) {
+      // @ts-expect-error todo(flow->ts) union type is too strict
       this.prodParam.enter(flags | PARAM_IN);
       try {
         return callback();
@@ -2602,6 +2605,7 @@ export default abstract class ExpressionParser extends LValParser {
     const flags = this.prodParam.currentFlags();
     const prodParamToClear = PARAM_IN & flags;
     if (prodParamToClear) {
+      // @ts-expect-error todo(flow->ts) union type is too strict
       this.prodParam.enter(flags & ~PARAM_IN);
       try {
         return callback();

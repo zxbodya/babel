@@ -2798,11 +2798,13 @@ export default (superClass: typeof Parser) =>
 
         if (
           arrow.node &&
+          // @ts-expect-error todo(flow->ts) improve types
           this.maybeUnwrapTypeCastExpression(arrow.node).type ===
             "ArrowFunctionExpression"
         ) {
           if (!arrow.error && !arrow.aborted) {
             // <T> async () => {}
+            // @ts-expect-error todo(flow->ts) improve types
             if (arrow.node.async) {
               /*:: invariant(typeParameters) */
               this.raise(
@@ -2811,9 +2813,11 @@ export default (superClass: typeof Parser) =>
               );
             }
 
+            // @ts-expect-error todo(flow->ts) improve types
             return arrow.node;
           }
 
+          // @ts-expect-error todo(flow->ts) improve types
           arrowExpression = arrow.node;
         }
 
