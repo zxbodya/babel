@@ -29,6 +29,9 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "dependencies": {
+    "@babel/types": "workspace:^7.11.0"
+  },
   "devDependencies": {
     "@babel/code-frame": "workspace:*",
     "@babel/helper-fixtures": "workspace:*",
