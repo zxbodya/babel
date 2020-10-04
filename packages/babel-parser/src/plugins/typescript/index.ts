@@ -1834,7 +1834,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
       if (bodilessType === "TSDeclareFunction" && this.state.isDeclareContext) {
         this.raise(node.start, TSErrors.DeclareFunctionHasImplementation);
         if (
-          // $FlowIgnore
+          // @ts-expect-error todo(flow->ts)
           node.declare
         ) {
           super.parseFunctionBodyAndFinish(node, bodilessType, isMethod);
