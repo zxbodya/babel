@@ -809,7 +809,7 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
 
     parseTemplateSubstitution(): N.TsType {
       if (this.state.inType) return this.tsParseType();
-      return super.parseTemplateSubstitution();
+      return super.parseTemplateSubstitution() as N.TsType;
     }
 
     tsParseThisTypeOrThisTypePredicate(): N.TsThisType | N.TsTypePredicate {
