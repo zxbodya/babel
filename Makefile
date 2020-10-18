@@ -210,6 +210,7 @@ clone-license:
 prepublish-build: clean-lib clean-runtime-helpers
 	NODE_ENV=production BABEL_ENV=production $(MAKE) build-bundle
 	$(MAKE) prepublish-build-standalone clone-license
+	yarn tsc -b .
 
 prepublish:
 	$(MAKE) check-yarn-bug-1882
