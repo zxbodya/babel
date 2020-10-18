@@ -278,6 +278,7 @@ export interface NodePathValidators {
   isRecordExpression(opts?: object): this is NodePath<t.RecordExpression>;
   isTupleExpression(opts?: object): this is NodePath<t.TupleExpression>;
   isDecimalLiteral(opts?: object): this is NodePath<t.DecimalLiteral>;
+  isStaticBlock(opts?: object): this is NodePath<t.StaticBlock>;
   isTSParameterProperty(opts?: object): this is NodePath<t.TSParameterProperty>;
   isTSDeclareFunction(opts?: object): this is NodePath<t.TSDeclareFunction>;
   isTSDeclareMethod(opts?: object): this is NodePath<t.TSDeclareMethod>;
@@ -294,6 +295,7 @@ export interface NodePathValidators {
   isTSAnyKeyword(opts?: object): this is NodePath<t.TSAnyKeyword>;
   isTSBooleanKeyword(opts?: object): this is NodePath<t.TSBooleanKeyword>;
   isTSBigIntKeyword(opts?: object): this is NodePath<t.TSBigIntKeyword>;
+  isTSIntrinsicKeyword(opts?: object): this is NodePath<t.TSIntrinsicKeyword>;
   isTSNeverKeyword(opts?: object): this is NodePath<t.TSNeverKeyword>;
   isTSNullKeyword(opts?: object): this is NodePath<t.TSNullKeyword>;
   isTSNumberKeyword(opts?: object): this is NodePath<t.TSNumberKeyword>;

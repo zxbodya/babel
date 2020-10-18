@@ -456,6 +456,7 @@ export interface NodePathAssetions {
   assertDecimalLiteral(
     opts?: object,
   ): asserts this is NodePath<t.DecimalLiteral>;
+  assertStaticBlock(opts?: object): asserts this is NodePath<t.StaticBlock>;
   assertTSParameterProperty(
     opts?: object,
   ): asserts this is NodePath<t.TSParameterProperty>;
@@ -490,6 +491,9 @@ export interface NodePathAssetions {
   assertTSBigIntKeyword(
     opts?: object,
   ): asserts this is NodePath<t.TSBigIntKeyword>;
+  assertTSIntrinsicKeyword(
+    opts?: object,
+  ): asserts this is NodePath<t.TSIntrinsicKeyword>;
   assertTSNeverKeyword(
     opts?: object,
   ): asserts this is NodePath<t.TSNeverKeyword>;
