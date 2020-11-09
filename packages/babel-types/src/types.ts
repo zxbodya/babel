@@ -822,6 +822,7 @@ export interface ClassDeclaration extends BaseNode {
 export interface ExportAllDeclaration extends BaseNode {
   type: "ExportAllDeclaration";
   source: StringLiteral;
+  assertions: ImportAttribute | null;
 }
 
 export interface ExportDefaultDeclaration extends BaseNode {
@@ -840,6 +841,7 @@ export interface ExportNamedDeclaration extends BaseNode {
     ExportSpecifier | ExportDefaultSpecifier | ExportNamespaceSpecifier
   >;
   source: StringLiteral | null;
+  assertions: ImportAttribute | null;
   exportKind: "type" | "value" | null;
 }
 
@@ -863,6 +865,7 @@ export interface ImportDeclaration extends BaseNode {
     ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier
   >;
   source: StringLiteral;
+  assertions: ImportAttribute | null;
   importKind: "type" | "typeof" | "value" | null;
 }
 
