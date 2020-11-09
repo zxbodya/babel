@@ -1,25 +1,23 @@
-// @flow
-
 import * as formatters from "./formatters";
 import createTemplateBuilder from "./builder";
 
-export const smart = createTemplateBuilder<*>(formatters.smart);
-export const statement = createTemplateBuilder<*>(formatters.statement);
-export const statements = createTemplateBuilder<*>(formatters.statements);
-export const expression = createTemplateBuilder<*>(formatters.expression);
-export const program = createTemplateBuilder<*>(formatters.program);
+export const smart = createTemplateBuilder<any>(formatters.smart);
+export const statement = createTemplateBuilder<any>(formatters.statement);
+export const statements = createTemplateBuilder<any>(formatters.statements);
+export const expression = createTemplateBuilder<any>(formatters.expression);
+export const program = createTemplateBuilder<any>(formatters.program);
 
 type DefaultTemplateBuilder = typeof smart & {
-  smart: typeof smart,
-  statement: typeof statement,
-  statements: typeof statements,
-  expression: typeof expression,
-  program: typeof program,
-  ast: typeof smart.ast,
+  smart: typeof smart;
+  statement: typeof statement;
+  statements: typeof statements;
+  expression: typeof expression;
+  program: typeof program;
+  ast: typeof smart.ast;
 };
 
 export default Object.assign(
-  ((smart.bind(undefined): any): DefaultTemplateBuilder),
+  (smart.bind(undefined) as any) as DefaultTemplateBuilder,
   {
     smart,
     statement,

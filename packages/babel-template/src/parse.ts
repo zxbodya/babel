@@ -1,4 +1,3 @@
-// @flow
 import * as t from "@babel/types";
 import type { TraversalAncestors, TraversalHandler } from "@babel/types";
 import { parse } from "@babel/parser";
@@ -7,18 +6,24 @@ import type { TemplateOpts, ParserOpts } from "./options";
 import type { Formatter } from "./formatters";
 
 export type Metadata = {
-  ast: BabelNodeFile,
-  placeholders: Array<Placeholder>,
-  placeholderNames: Set<string>,
+  ast: BabelNodeFile;
+  placeholders: Array<Placeholder>;
+  placeholderNames: Set<string>;
 };
 
 type PlaceholderType = "string" | "param" | "statement" | "other";
-export type Placeholder = {|
-  name: string,
-  resolve: BabelNodeFile => { parent: BabelNode, key: string, index?: number },
-  type: PlaceholderType,
-  isDuplicate: boolean,
-|};
+export type Placeholder = {
+  name: string;
+  resolve: (
+    a: BabelNodeFile,
+  ) => {
+    parent: BabelNode;
+    key: string;
+    index?: number;
+  };
+  type: PlaceholderType;
+  isDuplicate: boolean;
+};
 
 const PATTERN = /^[_$A-Z0-9]+$/;
 
@@ -52,7 +57,7 @@ export default function parseAndBuildMetadata<T>(
   };
   const isLegacyRef = { value: undefined };
 
-  t.traverse(ast, (placeholderVisitorHandler: TraversalHandler<*>), {
+  t.traverse(ast, placeholderVisitorHandler as TraversalHandler<any>, {
     syntactic,
     legacy,
     isLegacyRef,
@@ -81,16 +86,16 @@ function placeholderVisitorHandler(
           "'.syntacticPlaceholders' is false.",
       );
     } else {
-      name = ((node: any).name: BabelNodeIdentifier).name;
+      name = ((node as any).name as BabelNodeIdentifier).name;
       state.isLegacyRef.value = false;
     }
   } else if (state.isLegacyRef.value === false || state.syntacticPlaceholders) {
     return;
   } else if (t.isIdentifier(node) || t.isJSXIdentifier(node)) {
-    name = ((node: any): BabelNodeIdentifier).name;
+    name = ((node as any) as BabelNodeIdentifier).name;
     state.isLegacyRef.value = true;
   } else if (t.isStringLiteral(node)) {
-    name = ((node: any): BabelNodeStringLiteral).value;
+    name = ((node as any) as BabelNodeStringLiteral).value;
     state.isLegacyRef.value = true;
   } else {
     return;
@@ -162,9 +167,9 @@ function resolveAncestors(ast: BabelNodeFile, ancestors: TraversalAncestors) {
     const { key, index } = ancestors[i];
 
     if (index === undefined) {
-      parent = (parent: any)[key];
+      parent = (parent as any)[key];
     } else {
-      parent = (parent: any)[key][index];
+      parent = (parent as any)[key][index];
     }
   }
 
@@ -175,17 +180,19 @@ function resolveAncestors(ast: BabelNodeFile, ancestors: TraversalAncestors) {
 
 type MetadataState = {
   syntactic: {
-    placeholders: Array<Placeholder>,
-    placeholderNames: Set<string>,
-  },
+    placeholders: Array<Placeholder>;
+    placeholderNames: Set<string>;
+  };
   legacy: {
-    placeholders: Array<Placeholder>,
-    placeholderNames: Set<string>,
-  },
-  isLegacyRef: { value: boolean | void },
-  placeholderWhitelist: Set<string> | void,
-  placeholderPattern: RegExp | false | void,
-  syntacticPlaceholders: boolean | void,
+    placeholders: Array<Placeholder>;
+    placeholderNames: Set<string>;
+  };
+  isLegacyRef: {
+    value: boolean | void;
+  };
+  placeholderWhitelist: Set<string> | void;
+  placeholderPattern: RegExp | false | void;
+  syntacticPlaceholders: boolean | void;
 };
 
 function parseWithCodeFrame(

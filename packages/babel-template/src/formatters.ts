@@ -1,13 +1,11 @@
-// @flow
-
 export type Formatter<T> = {
-  code: string => string,
-  validate: BabelNodeFile => void,
-  unwrap: BabelNodeFile => T,
+  code: (a: string) => string;
+  validate: (a: BabelNodeFile) => void;
+  unwrap: (a: BabelNodeFile) => T;
 };
 
 function makeStatementFormatter<T>(
-  fn: (Array<BabelNodeStatement>) => T,
+  fn: (a: Array<BabelNodeStatement>) => T,
 ): Formatter<T> {
   return {
     // We need to prepend a ";" to force statement parsing so that
@@ -24,7 +22,7 @@ function makeStatementFormatter<T>(
 }
 
 export const smart: Formatter<
-  Array<BabelNodeStatement> | BabelNodeStatement,
+  Array<BabelNodeStatement> | BabelNodeStatement
 > = makeStatementFormatter(body => {
   if (body.length > 1) {
     return body;
@@ -33,9 +31,9 @@ export const smart: Formatter<
   }
 });
 
-export const statements: Formatter<
-  Array<BabelNodeStatement>,
-> = makeStatementFormatter(body => body);
+export const statements: Formatter<Array<
+  BabelNodeStatement
+>> = makeStatementFormatter(body => body);
 
 export const statement: Formatter<BabelNodeStatement> = makeStatementFormatter(
   body => {

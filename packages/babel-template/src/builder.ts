@@ -1,33 +1,22 @@
-// @flow
-
-import {
-  merge,
-  validate,
-  type TemplateOpts,
-  type PublicOpts,
-  type PublicReplacements,
-} from "./options";
+import { merge, validate } from "./options";
+import type { TemplateOpts, PublicOpts, PublicReplacements } from "./options";
 import type { Formatter } from "./formatters";
 
 import stringTemplate from "./string";
 import literalTemplate from "./literal";
 
 export type TemplateBuilder<T> = {
-  // Build a new builder, merging the given options with the previous ones.
-  (opts: PublicOpts): TemplateBuilder<T>,
-
-  // Building from a string produces an AST builder function by default.
-  (tpl: string, opts: ?PublicOpts): (?PublicReplacements) => T,
-
-  // Building from a template literal produces an AST builder function by default.
-  (tpl: Array<string>, ...args: Array<mixed>): (?PublicReplacements) => T,
-
   // Allow users to explicitly create templates that produce ASTs, skipping
   // the need for an intermediate function.
   ast: {
-    (tpl: string, opts: ?PublicOpts): T,
-    (tpl: Array<string>, ...args: Array<mixed>): T,
-  },
+    (tpl: string, opts?: PublicOpts | null): T;
+    (tpl: Array<string>, ...args: Array<unknown>): T;
+  };
+  (opts: PublicOpts): TemplateBuilder<T>;
+  (tpl: string, opts?: PublicOpts | null): (a?: PublicReplacements | null) => T;
+  (tpl: Array<string>, ...args: Array<unknown>): (
+    a?: PublicReplacements | null,
+  ) => T;
 };
 
 // Prebuild the options that will be used when parsing a `.ast` template.
@@ -69,7 +58,7 @@ export default function createTemplateBuilder<T>(
         );
       }
       throw new Error(`Unexpected template param ${typeof tpl}`);
-    }: Function),
+    }) as Function,
     {
       ast: (tpl, ...args) => {
         if (typeof tpl === "string") {
@@ -98,7 +87,9 @@ export default function createTemplateBuilder<T>(
   );
 }
 
-function extendedTrace<Arg, Result>(fn: Arg => Result): Arg => Result {
+function extendedTrace<Arg, Result>(
+  fn: (a: Arg) => Result,
+): (a: Arg) => Result {
   // Since we lazy parse the template, we get the current stack so we have the
   // original stack to append if it errors when parsing
   let rootStack = "";
