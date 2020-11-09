@@ -1881,8 +1881,18 @@ export default (superClass: ClassWithMixin<typeof Parser, IJSXParserMixin>) =>
       return exprList;
     }
 
-    parseArrayLike(...args): N.ArrayExpression | N.TupleExpression {
-      const node = super.parseArrayLike(...args);
+    parseArrayLike(
+      close: TokenType,
+      canBePattern: boolean,
+      isTuple: boolean,
+      refExpressionErrors?: ExpressionErrors | null,
+    ): N.ArrayExpression | N.TupleExpression {
+      const node = super.parseArrayLike(
+        close,
+        canBePattern,
+        isTuple,
+        refExpressionErrors,
+      );
 
       if (node.type === "ArrayExpression") {
         this.tsCheckForInvalidTypeCasts(node.elements);
