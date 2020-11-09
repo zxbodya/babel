@@ -315,8 +315,9 @@ export default (superClass: typeof Parser) =>
 
       if (node) {
         node.type = "Property";
-        if (((node as any) as N.ClassMethod).kind === "method")
+        if (((node as any) as N.ClassMethod).kind === "method") {
           node.kind = "init";
+        }
         node.shorthand = false;
       }
 
