@@ -351,7 +351,7 @@ export default class ExpressionParser extends LValParser {
     expr: N.Expression,
     startPos: number,
     startLoc: Position,
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     refExpressionErrors?: ExpressionErrors | null,
   ): N.Expression {
     if (this.eat(tt.question)) {
@@ -1720,7 +1720,7 @@ export default class ExpressionParser extends LValParser {
     return parenExpression;
   }
 
-  // eslint-disable-next-line no-unused-vars -- `params` is used in typescript plugin
+  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars -- `params` is used in typescript plugin
   shouldParseArrow(params: Array<N.Node>): boolean {
     return !this.canInsertSemicolon();
   }
@@ -1735,9 +1735,9 @@ export default class ExpressionParser extends LValParser {
 
   parseParenItem(
     node: N.Expression,
-    // eslint-disable-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     startPos: number,
-    // eslint-disable-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     startLoc: Position,
   ): N.Expression {
     return node;
@@ -2406,7 +2406,6 @@ export default class ExpressionParser extends LValParser {
   checkParams(
     node: N.Function,
     allowDuplicates: boolean,
-    // eslint-disable-next-line no-unused-vars
     isArrowFunction?: boolean | null,
     strictModeChanged: boolean = true,
   ): void {

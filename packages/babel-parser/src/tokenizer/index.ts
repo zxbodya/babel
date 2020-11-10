@@ -1572,7 +1572,7 @@ export default class Tokenizer extends ParserErrors {
   }
 
   // the prevType is required by the jsx plugin
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
   updateContext(prevType: TokenType): void {
     this.state.type.updateContext?.(this.state.context);
   }

@@ -1711,7 +1711,7 @@ export default class StatementParser extends ExpressionParser {
 
   // Overridden in typescript.js
   parsePostMemberNameModifiers(
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     methodOrProp: N.ClassMethod | N.ClassProperty,
   ): void {}
 
@@ -1820,7 +1820,7 @@ export default class StatementParser extends ExpressionParser {
     throw this.unexpected(null, tt.braceL);
   }
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   eatExportStar(node: N.Node): boolean {
     return this.eat(tt.star);
   }
@@ -1925,8 +1925,8 @@ export default class StatementParser extends ExpressionParser {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
   parseExportDeclaration(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     node: N.ExportNamedDeclaration,
   ): N.Declaration | undefined | null {
     return this.parseStatement(null);
@@ -2238,7 +2238,7 @@ export default class StatementParser extends ExpressionParser {
     return this.parseExprAtom();
   }
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   shouldParseDefaultImport(node: N.ImportDeclaration): boolean {
     return this.match(tt.name);
   }
