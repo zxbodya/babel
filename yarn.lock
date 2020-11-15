@@ -430,6 +430,7 @@ __metadata:
   resolution: "@babel/helper-builder-react-jsx@workspace:packages/babel-helper-builder-react-jsx"
   dependencies:
     "@babel/helper-annotate-as-pure": "workspace:^7.15.4"
+    "@babel/traverse": "workspace:*"
     "@babel/types": "workspace:^7.15.4"
   languageName: unknown
   linkType: soft
@@ -1162,6 +1163,8 @@ __metadata:
     "@babel/helper-plugin-test-runner": "workspace:*"
     "@babel/helper-plugin-utils": "workspace:^7.14.5"
     "@babel/plugin-syntax-class-static-block": ^7.14.5
+    "@babel/traverse": "workspace:*"
+    "@babel/types": "workspace:*"
   peerDependencies:
     "@babel/core": ^7.12.0
   languageName: unknown
@@ -1176,6 +1179,7 @@ __metadata:
     "@babel/helper-plugin-test-runner": "workspace:*"
     "@babel/helper-plugin-utils": "workspace:^7.14.5"
     "@babel/plugin-syntax-decorators": "workspace:^7.14.5"
+    "@babel/traverse": "workspace:*"
     babel-plugin-polyfill-es-shims: ^0.2.2
     object.getownpropertydescriptors: ^2.1.1
   peerDependencies:
@@ -1383,6 +1387,8 @@ __metadata:
     "@babel/helper-plugin-test-runner": "workspace:*"
     "@babel/helper-plugin-utils": "workspace:^7.14.5"
     "@babel/plugin-syntax-numeric-separator": ^7.10.4
+    "@babel/traverse": "workspace:*"
+    "@babel/types": "workspace:*"
   peerDependencies:
     "@babel/core": ^7.0.0-0
   languageName: unknown
@@ -1467,6 +1473,7 @@ __metadata:
     "@babel/helper-skip-transparent-expression-wrappers": "workspace:^7.14.5"
     "@babel/plugin-syntax-optional-chaining": ^7.8.3
     "@babel/plugin-transform-block-scoping": "workspace:*"
+    "@babel/traverse": "workspace:*"
   peerDependencies:
     "@babel/core": ^7.0.0-0
   languageName: unknown
@@ -1996,6 +2003,7 @@ __metadata:
     "@babel/helper-plugin-test-runner": "workspace:*"
     "@babel/helper-plugin-utils": "workspace:^7.14.5"
     "@babel/traverse": "workspace:*"
+    "@babel/types": "workspace:*"
   peerDependencies:
     "@babel/core": ^7.0.0-0
   languageName: unknown
@@ -2152,6 +2160,7 @@ __metadata:
     "@babel/core": "workspace:*"
     "@babel/helper-plugin-test-runner": "workspace:*"
     "@babel/helper-plugin-utils": "workspace:^7.14.5"
+    "@babel/traverse": "workspace:*"
   peerDependencies:
     "@babel/core": ^7.0.0-0
   languageName: unknown
@@ -3244,7 +3253,8 @@ __metadata:
     "@babel/plugin-transform-unicode-escapes": "workspace:^7.14.5"
     "@babel/plugin-transform-unicode-regex": "workspace:^7.14.5"
     "@babel/preset-modules": ^0.1.4
-    "@babel/types": "workspace:^7.15.4"
+    "@babel/traverse": "workspace:*"
+    "@babel/types": "workspace:*"
     babel-plugin-polyfill-corejs2: ^0.2.2
     babel-plugin-polyfill-corejs3: ^0.2.2
     babel-plugin-polyfill-regenerator: ^0.2.2
