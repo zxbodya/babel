@@ -4937,6 +4937,7 @@ __metadata:
     eslint-plugin-prettier: ^3.1.2
     fancy-log: ^1.3.3
     flow-bin: ^0.123.0
+    flowgen: ^1.12.1
     gulp: ^4.0.2
     gulp-babel: ^8.0.0
     gulp-filter: ^5.1.0
@@ -5770,6 +5771,13 @@ __metadata:
   version: 4.0.1
   resolution: "commander@npm:4.0.1"
   checksum: 86a2ebdbc2ae6094cc26427ca936b8c2ad563899bd457bb2d8af06f76e6e60d079a0a14a9be5bd1d9113969fe32afb342e491fc2a0978ff02f0a854932e1e4fd
+  languageName: node
+  linkType: hard
+
+"commander@npm:^6.1.0":
+  version: 6.2.0
+  resolution: "commander@npm:6.2.0"
+  checksum: c78501cd98e6ad66839004adc27940f5fc1a0102b306fbbc177965101d586cf6dd2e01bdffd64f99f2d4862101f24e602e3e4baa641b6f6a11c01ec5c900e412
   languageName: node
   linkType: hard
 
@@ -7301,6 +7309,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flowgen@npm:^1.12.1":
+  version: 1.12.1
+  resolution: "flowgen@npm:1.12.1"
+  dependencies:
+    "@babel/code-frame": ^7.10.4
+    "@babel/highlight": ^7.10.4
+    commander: ^6.1.0
+    lodash: ^4.17.20
+    prettier: ^2.1.1
+    shelljs: ^0.8.4
+    typescript: ^4.0.2
+    typescript-compiler: ^1.4.1-2
+  bin:
+    flowgen: lib/cli/index.js
+  checksum: 58b08a93a989cd9cb7c9cd4913a859a281f92b83bc557af56f5da6f42eef1f22928d6a0830966fe1a0798aeb4295eae2c6ffb4de10a5dd88faaa243d72ee1765
+  languageName: node
+  linkType: hard
+
 "flush-write-stream@npm:^1.0.2":
   version: 1.1.1
   resolution: "flush-write-stream@npm:1.1.1"
@@ -8176,7 +8202,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"interpret@npm:^1.4.0":
+"interpret@npm:^1.0.0, interpret@npm:^1.4.0":
   version: 1.4.0
   resolution: "interpret@npm:1.4.0"
   checksum: f15725d76206525546f559030ddc967db025c6db904eb8798a70ec3c07e42c5537c5cbc73a15eafd4ae5cdabad35601abf8878261c03dcc8217747e8037575fe
@@ -11039,6 +11065,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"prettier@npm:^2.1.1":
+  version: 2.2.1
+  resolution: "prettier@npm:2.2.1"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 92c6c9f4b87eba1f28466edee57dd18c80d00b858edda77d46d1950d20e6e302b68ee255fc91133ba931e63c4577b5ae30da194d9626a8f3c0177778b91bf056
+  languageName: node
+  linkType: hard
+
 "pretty-format@npm:^24.9.0":
   version: 24.9.0
   resolution: "pretty-format@npm:24.9.0"
@@ -12061,6 +12096,19 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"shelljs@npm:^0.8.4":
+  version: 0.8.4
+  resolution: "shelljs@npm:0.8.4"
+  dependencies:
+    glob: ^7.0.0
+    interpret: ^1.0.0
+    rechoir: ^0.6.2
+  bin:
+    shjs: bin/shjs
+  checksum: bdf68e3c2a8a6d191dde3be2800bfcfd688c126344ccaf6cf7024cdaf824d0d3523b8e514cd52264f739cbabd2b0569637dd5a8183377347225af918e03ff5dc
+  languageName: node
+  linkType: hard
+
 "shellwords@npm:^0.1.1":
   version: 0.1.1
   resolution: "shellwords@npm:0.1.1"
@@ -13027,7 +13075,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-typescript@^4.0.5:
+"typescript-compiler@npm:^1.4.1-2":
+  version: 1.4.1
+  resolution: "typescript-compiler@npm:1.4.1"
+  checksum: 7ecb429866aeebdb0955d0211dceb0f92303a7f8495bb8fada1bf420318e816f8f6a673221264df6c40314f3c9844feab1feea9406c4b6b99ac35d985dcc1685
+  languageName: node
+  linkType: hard
+
+"typescript@^4.0.2, typescript@^4.0.5":
   version: 4.0.5
   resolution: "typescript@npm:4.0.5"
   bin:
@@ -13037,7 +13092,7 @@ typescript@^4.0.5:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.5#builtin<compat/typescript>":
+"typescript@patch:typescript@^4.0.2#builtin<compat/typescript>, typescript@patch:typescript@^4.0.5#builtin<compat/typescript>":
   version: 4.0.5
   resolution: "typescript@patch:typescript@npm%3A4.0.5#builtin<compat/typescript>::version=4.0.5&hash=cc6730"
   bin:
