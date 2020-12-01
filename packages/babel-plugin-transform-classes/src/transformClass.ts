@@ -295,6 +295,7 @@ export default function transformClass(
         t.cloneNode(classState.superFnId),
         t.thisExpression(),
         bareSuperNode.arguments,
+        false,
       );
     }
 
