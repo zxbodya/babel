@@ -1,7 +1,6 @@
 import jsTokens, { matchToToken } from "js-tokens";
 import { isReservedWord, isKeyword } from "@babel/helper-validator-identifier";
 import Chalk from "chalk";
-import type { Chalk as ChalkType } from "chalk";
 
 /**
  * Chalk styles for token types.
@@ -107,11 +106,9 @@ export function shouldHighlight(options: Options): boolean {
  * The Chalk instance that should be used given the passed options.
  */
 export function getChalk(options: Options) {
-  let chalk: ChalkType = Chalk;
-  if (options.forceColor) {
-    chalk = new Chalk.constructor({ enabled: true, level: 1 });
-  }
-  return chalk;
+  return options.forceColor
+    ? new Chalk.constructor({ enabled: true, level: 1 })
+    : Chalk;
 }
 
 /**
