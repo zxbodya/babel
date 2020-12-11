@@ -56,13 +56,20 @@ for package in "${packages[@]}"; do
     echo "create target branch ${targetBranchName}"
     # remove previous version
     git branch -D ${targetBranchName} || true
-    # create a new branch tracking a remote
-    git checkout ts
-    git checkout -b ${targetBranchName}
 
     echo "cherry pick manual type fixes for ${package}"
-    # rebase commits related to the package on top of temporary branch created earlier
-    GIT_SEQUENCE_EDITOR="sed -i '' -n '/${package}/p' " git rebase -i ${tmpBranchName}
+    torebase=`git log --pretty=oneline main..ts | grep babel-helper-split-export-declaration`
+    if [ -z "$torebase" ]
+    then
+        echo "no manual fixes"
+        git checkout ${tmpBranchName}
+        git checkout -b ${targetBranchName}
+    else
+        git checkout ts
+        git checkout -b ${targetBranchName}
+        # rebase commits related to the package on top of temporary branch created earlier
+        GIT_SEQUENCE_EDITOR="sed -i '' -n '/${package}/p' " git rebase -i ${tmpBranchName}
+    fi
 
     echo "cleanup"
     git branch -d ${tmpBranchName}
