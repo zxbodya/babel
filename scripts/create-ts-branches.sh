@@ -47,7 +47,7 @@ for package in "${packages[@]}"; do
 
     git reset HEAD -- ${rootPath}
     git add ${rootPath}/packages/${package}/* || true
-    git commit --no-verify -m "${package} flowts convert"
+    git commit --no-verify -m "${package} flowts convert" || true
 
     git add ${rootPath}/* || true
     git reset HEAD -- ${rootPath}/scripts/create-branches.sh
