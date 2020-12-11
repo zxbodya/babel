@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+#set -e
 
 packages=(
     babel-helper-validator-identifier
@@ -58,11 +58,11 @@ for package in "${packages[@]}"; do
     git branch -D ${targetBranchName} || true
 
     echo "cherry pick manual type fixes for ${package}"
-    torebase=`git log --pretty=oneline main..ts | grep babel-helper-split-export-declaration`
-    if [[ -z "$torebase" ]]
+    torebase=`git log --pretty=oneline main..ts | grep ${package}`
+    if [[ -z "${torebase}" ]]
     then
         echo "no manual fixes"
-        git checkout ${tmpBranchName}
+        #        git checkout ${tmpBranchName}
         git checkout -b ${targetBranchName}
     else
         echo "manual fixes"
