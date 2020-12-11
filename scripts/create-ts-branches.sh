@@ -4,8 +4,10 @@ set -e
 packages=(
     babel-helper-validator-identifier
     babel-highlight
-    babel-code-frame
-    babel-types
+    babel-generator
+    babel-helper-function-name
+    babel-helper-split-export-declaration
+    babel-traverse
 )
 
 rootPath=".."
