@@ -59,12 +59,14 @@ for package in "${packages[@]}"; do
 
     echo "cherry pick manual type fixes for ${package}"
     torebase=`git log --pretty=oneline main..ts | grep babel-helper-split-export-declaration`
-    if [ -z "$torebase" ]
+    if [[ -z "$torebase" ]]
     then
         echo "no manual fixes"
         git checkout ${tmpBranchName}
         git checkout -b ${targetBranchName}
     else
+        echo "manual fixes"
+        echo "${torebase}"
         git checkout ts
         git checkout -b ${targetBranchName}
         # rebase commits related to the package on top of temporary branch created earlier
