@@ -2,7 +2,7 @@
 #set -e
 
 packages=(
-    babel-helper-validator-identifier
+    babel-types
     babel-highlight
     babel-generator
     babel-helper-function-name
@@ -31,7 +31,7 @@ for package in "${packages[@]}"; do
 
     git reset HEAD -- ${rootPath}
     git add ${rootPath}/packages/${package}/*  || true
-    git commit --no-verify -m "${package} flowts rename"
+    git commit --no-verify -m "${package} flowts rename" || true
 
     git add ${rootPath}/* || true
     git reset HEAD -- ${rootPath}/scripts/create-branches.sh
