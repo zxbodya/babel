@@ -43,7 +43,7 @@ function getTokenType(match) {
   const token = matchToToken(match);
 
   if (token.type === "name") {
-    if (isKeyword(token.value) || isReservedWord(token.value)) {
+    if (isKeyword(token.value) || isReservedWord(token.value, false)) {
       return "keyword";
     }
 
