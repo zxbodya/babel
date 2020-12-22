@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * This file handles all logic for converting string-based configuration references into loaded objects.
  */
@@ -29,7 +27,10 @@ export function resolvePreset(name: string, dirname: string): string | null {
 export function loadPlugin(
   name: string,
   dirname: string,
-): { filepath: string, value: mixed } {
+): {
+  filepath: string;
+  value: unknown;
+} {
   const filepath = resolvePlugin(name, dirname);
   if (!filepath) {
     throw new Error(`Plugin ${name} not found relative to ${dirname}`);
@@ -44,7 +45,10 @@ export function loadPlugin(
 export function loadPreset(
   name: string,
   dirname: string,
-): { filepath: string, value: mixed } {
+): {
+  filepath: string;
+  value: unknown;
+} {
   const filepath = resolvePreset(name, dirname);
   if (!filepath) {
     throw new Error(`Preset ${name} not found relative to ${dirname}`);
@@ -145,7 +149,7 @@ function resolveStandardizedName(
 }
 
 const LOADING_MODULES = new Set();
-function requireModule(type: string, name: string): mixed {
+function requireModule(type: string, name: string): unknown {
   if (LOADING_MODULES.has(name)) {
     throw new Error(
       `Reentrant ${type} detected trying to load "${name}". This module is not ignored ` +
