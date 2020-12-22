@@ -294,7 +294,7 @@ function wrapPackagesArray(type, names, optionsDir) {
  * @returns {{}} options whose plugins/presets are resolved
  */
 export function resolveOptionPluginOrPreset(
-  options: {},
+  options: any,
   optionsDir: string,
 ): {} {
   if (options.plugins) {
