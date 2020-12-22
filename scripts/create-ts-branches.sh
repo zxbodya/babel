@@ -2,11 +2,9 @@
 #set -e
 
 packages=(
-    babel-types
     babel-highlight
     babel-generator
     babel-helper-function-name
-    babel-helper-split-export-declaration
     babel-traverse
 )
 
