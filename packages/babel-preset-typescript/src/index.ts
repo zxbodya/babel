@@ -24,7 +24,7 @@ export default declare((api, opts) => {
         onlyRemoveTypeImports,
         optimizeConstEnums,
       })
-    : isTSX => ({
+    : (isTSX: boolean) => ({
         allowDeclareFields: opts.allowDeclareFields,
         allowNamespaces,
         isTSX,
