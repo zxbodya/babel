@@ -5,7 +5,6 @@ packages=(
     babel-highlight
     babel-generator
     babel-helper-function-name
-    babel-traverse
 )
 
 rootPath=".."
