@@ -2,9 +2,8 @@
 #set -e
 
 packages=(
-    babel-highlight
-    babel-generator
-    babel-helper-function-name
+    babel-standalone
+    babel-cli
 )
 
 rootPath=".."
