@@ -77,6 +77,16 @@ for package in "${packages[@]}"; do
         # rebase commits related to the package on top of temporary branch created earlier
         GIT_SEQUENCE_EDITOR="sed -i '' -n '/${package}/p' " git rebase -i ${tmpBranchName}
     fi
+    cd ${rootPath}
+    make generate-tsconfig
+    cd scripts
+    git add ${rootPath}/* || true
+    git commit -m "make generate-tsconfig" || true
+    cd ${rootPath}
+    yarn install || true
+    cd scripts
+    git add ${rootPath}/* || true
+    git commit -m "yarn install" || true
 
     echo "cleanup"
     git branch -d ${tmpBranchName}
