@@ -2,16 +2,8 @@
 #set -e
 
 packages=(
-    babel-standalone
-    babel-cli
-    babel-helper-compilation-targets
     babel-helper-create-class-features-plugin
-    babel-helper-create-regexp-features-plugin
     babel-plugin-transform-block-scoping
-    babel-plugin-transform-classes
-    babel-plugin-transform-react-jsx
-    babel-plugin-transform-runtime
-    babel-plugin-transform-typescript
     babel-preset-env
 )
 
