@@ -112,7 +112,7 @@ export default class ExpressionParser extends LValParser {
       prop.type === "SpreadElement" ||
       this.isObjectMethod(prop) ||
       prop.computed ||
-      // $FlowIgnore
+      // @ts-ignore todo($FlowIgnore)
       prop.shorthand
     ) {
       return;
@@ -1786,7 +1786,7 @@ export default class ExpressionParser extends LValParser {
     if (this.eat(tt.parenL)) {
       const args = this.parseExprList(tt.parenR);
       this.toReferencedList(args);
-      // $FlowFixMe (parseExprList should be all non-null in this case)
+      // @ts-expect-error todo($FlowFixMe) (parseExprList should be all non-null in this case)
       node.arguments = args;
     } else {
       node.arguments = [];
@@ -1868,7 +1868,7 @@ export default class ExpressionParser extends LValParser {
 
       const prop = this.parsePropertyDefinition(isPattern, refExpressionErrors);
       if (!isPattern) {
-        // $FlowIgnore RestElement will never be returned if !isPattern
+        // @ts-ignore todo($FlowIgnore) RestElement will never be returned if !isPattern
         this.checkProto(prop, isRecord, propHash, refExpressionErrors);
       }
 
@@ -1880,7 +1880,7 @@ export default class ExpressionParser extends LValParser {
         this.raise(prop.start, Errors.InvalidRecordProperty);
       }
 
-      // $FlowIgnore
+      // @ts-ignore todo($FlowIgnore)
       if (prop.shorthand) {
         this.addExtra(prop, "shorthand", true);
       }
@@ -2166,7 +2166,7 @@ export default class ExpressionParser extends LValParser {
 
     if (!node) this.unexpected();
 
-    // $FlowFixMe
+    // @ts-expect-error todo($FlowFixMe)
     return node;
   }
 
@@ -2317,7 +2317,7 @@ export default class ExpressionParser extends LValParser {
     type: string,
     isMethod: boolean = false,
   ): void {
-    // $FlowIgnore (node is not bodiless if we get here)
+    // @ts-ignore todo($FlowIgnore) (node is not bodiless if we get here)
     this.parseFunctionBody(node, false, isMethod);
     this.finishNode(node, type);
   }
@@ -2355,9 +2355,9 @@ export default class ExpressionParser extends LValParser {
           if (hasStrictModeDirective && nonSimple) {
             // This logic is here to align the error location with the ESTree plugin.
             const errorPos =
-              // $FlowIgnore
+              // @ts-ignore todo($FlowIgnore)
               (node.kind === "method" || node.kind === "constructor") &&
-              // $FlowIgnore
+              // @ts-ignore todo($FlowIgnore)
               !!node.key
                 ? node.key.end
                 : node.start;

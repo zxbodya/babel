@@ -350,9 +350,9 @@ export default (superClass: {
       this.expect(tt.parenR);
 
       [
-        // $FlowFixMe (destructuring not supported yet)
+        // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
         typeNode.returnType,
-        // $FlowFixMe (destructuring not supported yet)
+        // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
         node.predicate,
       ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -547,14 +547,14 @@ export default (superClass: {
           node = this.parseExport(node);
           if (node.type === "ExportNamedDeclaration") {
             // flow does not support the ExportNamedDeclaration
-            // $FlowIgnore
+            // @ts-ignore todo($FlowIgnore)
             node.type = "ExportDeclaration";
-            // $FlowFixMe
+            // @ts-expect-error todo($FlowFixMe)
             node.default = false;
             delete node.exportKind;
           }
 
-          // $FlowIgnore
+          // @ts-ignore todo($FlowIgnore)
           node.type = "Declare" + node.type;
 
           return node;
@@ -1823,9 +1823,9 @@ export default (superClass: {
         const typeNode = this.startNode();
 
         [
-          // $FlowFixMe (destructuring not supported yet)
+          // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
           typeNode.typeAnnotation,
-          // $FlowFixMe (destructuring not supported yet)
+          // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
           node.predicate,
         ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -2443,7 +2443,7 @@ export default (superClass: {
         }
         // estree support
       } else if (
-        // $FlowFixMe flow does not know about the face that estree can replace ClassMethod with MethodDefinition
+        // @ts-expect-error todo($FlowFixMe) flow does not know about the face that estree can replace ClassMethod with MethodDefinition
         method.type === "MethodDefinition" &&
         isConstructor &&
         method.value.params
@@ -2513,7 +2513,7 @@ export default (superClass: {
     ): N.Identifier {
       const variance = this.flowParseVariance();
       const key = super.parsePropertyName(node, isPrivateNameAllowed);
-      // $FlowIgnore ("variance" not defined on TsNamedTypeElementBase)
+      // @ts-ignore todo($FlowIgnore) ("variance" not defined on TsNamedTypeElementBase)
       node.variance = variance;
       return key;
     }
@@ -2764,7 +2764,7 @@ export default (superClass: {
 
     // parse function type parameters - function foo<T>() {}
     parseFunctionParams(node: N.Function, allowModifiers?: boolean): void {
-      // $FlowFixMe
+      // @ts-expect-error todo($FlowFixMe)
       const kind = node.kind;
       if (kind !== "get" && kind !== "set" && this.isRelational("<")) {
         node.typeParameters = this.flowParseTypeParameterDeclaration();
@@ -2958,9 +2958,9 @@ export default (superClass: {
           const typeNode = this.startNode();
 
           [
-            // $FlowFixMe (destructuring not supported yet)
+            // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
             typeNode.typeAnnotation,
-            // $FlowFixMe (destructuring not supported yet)
+            // @ts-expect-error todo($FlowFixMe) (destructuring not supported yet)
             node.predicate,
           ] = this.flowParseTypeAndPredicateInitialiser();
 
@@ -3106,7 +3106,7 @@ export default (superClass: {
         node.callee = base;
         node.typeArguments = this.flowParseTypeParameterInstantiation();
         this.expect(tt.parenL);
-        // $FlowFixMe
+        // @ts-expect-error todo($FlowFixMe)
         node.arguments = this.parseCallExpressionArguments(tt.parenR, false);
         node.optional = true;
         return this.finishCallExpression(node, /* optional */ true);

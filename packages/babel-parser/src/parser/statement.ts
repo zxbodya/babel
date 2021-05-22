@@ -65,7 +65,7 @@ function babel7CompatTokens(tokens) {
         tokens.splice(
           i,
           1,
-          // $FlowIgnore: hacky way to create token
+          // @ts-ignore todo($FlowIgnore): hacky way to create token
           new Token({
             type: tt.hash,
             value: "#",
@@ -74,7 +74,7 @@ function babel7CompatTokens(tokens) {
             startLoc: loc.start,
             endLoc: hashEndLoc,
           }),
-          // $FlowIgnore: hacky way to create token
+          // @ts-ignore todo($FlowIgnore): hacky way to create token
           new Token({
             type: tt.name,
             value: value,
@@ -121,7 +121,6 @@ export default class StatementParser extends ExpressionParser {
     ) {
       for (const [name] of Array.from(this.scope.undefinedExports)) {
         const pos = this.scope.undefinedExports.get(name);
-        // $FlowIssue
         this.raise(pos, Errors.ModuleExportUndefined, name);
       }
     }
@@ -249,7 +248,7 @@ export default class StatementParser extends ExpressionParser {
     switch (starttype) {
       case tt._break:
       case tt._continue:
-        // $FlowFixMe
+        // @ts-expect-error todo($FlowFixMe)
         return this.parseBreakContinueStatement(node, starttype.keyword);
       case tt._debugger:
         return this.parseDebuggerStatement(node);
@@ -2051,7 +2050,7 @@ export default class StatementParser extends ExpressionParser {
           const exportedName =
             exported.type === "Identifier" ? exported.name : exported.value;
           this.checkDuplicateExports(specifier, exportedName);
-          // $FlowIgnore
+          // @ts-ignore todo($FlowIgnore)
           if (!isFrom && specifier.local) {
             const { local } = specifier;
             if (local.type !== "Identifier") {

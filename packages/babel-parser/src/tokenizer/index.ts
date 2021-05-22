@@ -1303,7 +1303,7 @@ export default class Tokenizer extends ParserErrors {
       if (ch === quote) break;
       if (ch === charCodes.backslash) {
         out += this.input.slice(chunkStart, this.state.pos);
-        // $FlowFixMe
+        // @ts-expect-error todo($FlowFixMe)
         out += this.readEscapedChar(false);
         chunkStart = this.state.pos;
       } else if (

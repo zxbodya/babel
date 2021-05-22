@@ -40,7 +40,7 @@ type TsModifier =
 
 function nonNull<T>(x?: T | null): T {
   if (x == null) {
-    // $FlowIgnore
+    // @ts-ignore todo($FlowIgnore)
     throw new Error(`Unexpected ${x} value.`);
   }
   return x;
@@ -311,7 +311,7 @@ export default (superClass: {
         if (disallowedModifiers?.includes(modifier)) {
           this.raise(
             startPos,
-            // $FlowIgnore
+            // @ts-ignore todo($FlowIgnore)
             errorTemplate,
             modifier,
           );
@@ -905,7 +905,7 @@ export default (superClass: {
           this.raise(type.start, TSErrors.InvalidTupleMemberLabel);
           // This produces an invalid AST, but at least we don't drop
           // nodes representing the invalid source.
-          // $FlowIgnore
+          // @ts-ignore todo($FlowIgnore)
           labeledNode.label = type;
         }
 
@@ -940,7 +940,7 @@ export default (superClass: {
     ): N.TsFunctionOrConstructorType {
       const node: N.TsFunctionOrConstructorType = this.startNode();
       if (type === "TSConstructorType") {
-        // $FlowIgnore
+        // @ts-ignore todo($FlowIgnore)
         node.abstract = !!abstract;
         if (abstract) this.next();
         this.next(); // eat `new`
@@ -2025,7 +2025,7 @@ export default (superClass: {
       if (bodilessType === "TSDeclareFunction" && this.state.isAmbientContext) {
         this.raise(node.start, TSErrors.DeclareFunctionHasImplementation);
         if (
-          // $FlowIgnore
+          // @ts-ignore todo($FlowIgnore)
           node.declare
         ) {
           super.parseFunctionBodyAndFinish(node, bodilessType, isMethod);
@@ -2148,7 +2148,7 @@ export default (superClass: {
 
             if (!noCalls && this.eat(tt.parenL)) {
               // possibleAsync always false here, because we would have handled it above.
-              // $FlowIgnore (won't be any undefined arguments)
+              // @ts-ignore todo($FlowIgnore) (won't be any undefined arguments)
               node.arguments = this.parseCallExpressionArguments(
                 tt.parenR,
                 /* possibleAsync */ false,
@@ -2159,7 +2159,7 @@ export default (superClass: {
 
               node.typeParameters = typeArguments;
               if (state.optionalChainMember) {
-                // $FlowIgnore
+                // @ts-ignore todo($FlowIgnore)
                 node.optional = isOptionalCall;
               }
 
@@ -2685,12 +2685,12 @@ export default (superClass: {
     parseClassPrivateProperty(
       node: N.ClassPrivateProperty,
     ): N.ClassPrivateProperty {
-      // $FlowIgnore
+      // @ts-ignore todo($FlowIgnore)
       if (node.abstract) {
         this.raise(node.start, TSErrors.PrivateElementHasAbstract);
       }
 
-      // $FlowIgnore
+      // @ts-ignore todo($FlowIgnore)
       if (node.accessibility) {
         this.raise(
           node.start,
@@ -2716,7 +2716,7 @@ export default (superClass: {
         this.raise(typeParameters.start, TSErrors.ConstructorHasTypeParameters);
       }
 
-      // $FlowIgnore
+      // @ts-ignore todo($FlowIgnore)
       if (method.declare && (method.kind === "get" || method.kind === "set")) {
         this.raise(method.start, TSErrors.DeclareAccessor, method.kind);
       }
