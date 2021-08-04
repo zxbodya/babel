@@ -48,7 +48,7 @@ function setTrailingComments(node: Node, comments: Array<Comment>) {
  * @param {Node} node
  * @param {Array<Comment>} comments
  */
-export function setInnerComments(node: Node, comments: Array<Comment> | void) {
+export function setInnerComments(node: Node, comments?: Array<Comment>) {
   if (node.innerComments === undefined) {
     node.innerComments = comments;
   } else if (comments !== undefined) {
