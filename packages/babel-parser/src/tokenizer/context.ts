@@ -1,5 +1,3 @@
-// @flow
-
 // The token context is used to track whether the apostrophe "`"
 // starts or ends a string template
 
@@ -16,7 +14,7 @@ export class TokContext {
 }
 
 export const types: {
-  [key: string]: TokContext,
+  [key: string]: TokContext;
 } = {
   brace: new TokContext("{"),
   template: new TokContext("`", true),

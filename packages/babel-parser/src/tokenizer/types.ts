@@ -1,4 +1,3 @@
-// @flow
 import type { TokContext } from "./context";
 // ## Token types
 
@@ -30,20 +29,20 @@ const prefix = true;
 const postfix = true;
 
 type TokenOptions = {
-  keyword?: string,
-  beforeExpr?: boolean,
-  startsExpr?: boolean,
-  rightAssociative?: boolean,
-  isLoop?: boolean,
-  isAssign?: boolean,
-  prefix?: boolean,
-  postfix?: boolean,
-  binop?: ?number,
+  keyword?: string;
+  beforeExpr?: boolean;
+  startsExpr?: boolean;
+  rightAssociative?: boolean;
+  isLoop?: boolean;
+  isAssign?: boolean;
+  prefix?: boolean;
+  postfix?: boolean;
+  binop?: number | null;
 };
 
 export class TokenType {
   label: string;
-  keyword: ?string;
+  keyword: string | undefined | null;
   beforeExpr: boolean;
   startsExpr: boolean;
   rightAssociative: boolean;
@@ -51,8 +50,8 @@ export class TokenType {
   isAssign: boolean;
   prefix: boolean;
   postfix: boolean;
-  binop: ?number;
-  updateContext: ?(context: Array<TokContext>) => void;
+  binop: number | undefined | null;
+  updateContext: ((context: Array<TokContext>) => void) | undefined | null;
 
   constructor(label: string, conf: TokenOptions = {}) {
     this.label = label;
@@ -82,7 +81,9 @@ function createBinop(name: string, binop: number) {
   return new TokenType(name, { beforeExpr, binop });
 }
 
-export const types: { [name: string]: TokenType } = {
+export const types: {
+  [name: string]: TokenType;
+} = {
   num: new TokenType("num", { startsExpr }),
   bigint: new TokenType("bigint", { startsExpr }),
   decimal: new TokenType("decimal", { startsExpr }),

@@ -1,5 +1,3 @@
-// @flow
-
 // Error messages are colocated with the plugin.
 /* eslint-disable @babel/development-internal/dry-error-messages */
 
@@ -18,7 +16,9 @@ import { Errors, makeErrorTemplates, ErrorCodes } from "../../parser/error";
 import type { LookaheadState } from "../../tokenizer/state";
 import State from "../../tokenizer/state";
 
-type JSXLookaheadState = LookaheadState & { inPropertyName: boolean };
+type JSXLookaheadState = LookaheadState & {
+  inPropertyName: boolean;
+};
 
 const HEX_NUMBER = /^[\da-fA-F]+$/;
 const DECIMAL_NUMBER = /^\d+$/;
@@ -61,7 +61,7 @@ tt.jsxTagStart.updateContext = context => {
   );
 };
 
-function isFragment(object: ?N.JSXElement): boolean {
+function isFragment(object?: N.JSXElement | null): boolean {
   return object
     ? object.type === "JSXOpeningFragment" ||
         object.type === "JSXClosingFragment"
@@ -93,7 +93,11 @@ function getQualifiedJSXName(
   throw new Error("Node had unexpected type: " + object.type);
 }
 
-export default (superClass: Class<Parser>): Class<Parser> =>
+export default (superClass: {
+  new (...args: any): Parser;
+}): {
+  new (...args: any): Parser;
+} =>
   class extends superClass {
     // Reads inline JSX contents token.
 
@@ -550,7 +554,7 @@ export default (superClass: Class<Parser>): Class<Parser> =>
     // Overrides
     // ==================================
 
-    parseExprAtom(refExpressionErrors: ?ExpressionErrors): N.Expression {
+    parseExprAtom(refExpressionErrors?: ExpressionErrors | null): N.Expression {
       if (this.match(tt.jsxText)) {
         return this.parseLiteral(this.state.value, "JSXText");
       } else if (this.match(tt.jsxTagStart)) {
@@ -569,9 +573,9 @@ export default (superClass: Class<Parser>): Class<Parser> =>
     }
 
     createLookaheadState(state: State): JSXLookaheadState {
-      const lookaheadState = ((super.createLookaheadState(
+      const lookaheadState = super.createLookaheadState(
         state,
-      ): any): JSXLookaheadState);
+      ) as any as JSXLookaheadState;
       lookaheadState.inPropertyName = state.inPropertyName;
       return lookaheadState;
     }
