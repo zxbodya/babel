@@ -25,6 +25,7 @@
     "./packages/babel-helper-validator-identifier/src/**/*.ts",
     "./packages/babel-helper-validator-option/src/**/*.ts",
     "./packages/babel-highlight/src/**/*.ts",
+    "./packages/babel-parser/src/**/*.ts",
     "./packages/babel-plugin-bugfix-v8-spread-parameters-in-optional-chaining/src/**/*.ts",
     "./packages/babel-plugin-proposal-async-do-expressions/src/**/*.ts",
     "./packages/babel-plugin-syntax-async-do-expressions/src/**/*.ts",
@@ -109,6 +110,9 @@
       ],
       "@babel/highlight": [
         "./packages/babel-highlight/src"
+      ],
+      "@babel/parser": [
+        "./packages/babel-parser/src"
       ],
       "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining": [
         "./packages/babel-plugin-bugfix-v8-spread-parameters-in-optional-chaining/src"
