@@ -12,7 +12,7 @@
       "path": "../babel-helper-annotate-as-pure"
     },
     {
-      "path": "../babel-helper-define-map"
+      "path": "../babel-helper-environment-visitor"
     },
     {
       "path": "../babel-helper-function-name"
@@ -33,10 +33,10 @@
       "path": "../babel-core"
     },
     {
-      "path": "../babel-traverse"
+      "path": "../babel-helper-plugin-test-runner"
     },
     {
-      "path": "../babel-helper-plugin-test-runner"
+      "path": "../babel-traverse"
     }
   ]
 }

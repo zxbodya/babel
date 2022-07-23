@@ -15,6 +15,9 @@
       "path": "../babel-generator"
     },
     {
+      "path": "../babel-helper-compilation-targets"
+    },
+    {
       "path": "../babel-helper-module-transforms"
     },
     {
@@ -31,6 +34,21 @@
     },
     {
       "path": "../babel-types"
+    },
+    {
+      "path": "../babel-helper-transform-fixture-test-runner"
+    },
+    {
+      "path": "../babel-plugin-syntax-flow"
+    },
+    {
+      "path": "../babel-plugin-transform-flow-strip-types"
+    },
+    {
+      "path": "../babel-plugin-transform-modules-commonjs"
+    },
+    {
+      "path": "../babel-preset-env"
     }
   ]
 }

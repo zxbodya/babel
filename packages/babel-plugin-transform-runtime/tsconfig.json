@@ -24,13 +24,13 @@
       "path": "../babel-helpers"
     },
     {
-      "path": "../babel-plugin-transform-typeof-symbol"
-    },
-    {
       "path": "../babel-preset-env"
     },
     {
       "path": "../babel-runtime"
+    },
+    {
+      "path": "../babel-runtime-corejs3"
     },
     {
       "path": "../babel-template"

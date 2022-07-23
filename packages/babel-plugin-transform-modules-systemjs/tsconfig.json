@@ -18,6 +18,9 @@
       "path": "../babel-helper-plugin-utils"
     },
     {
+      "path": "../babel-helper-validator-identifier"
+    },
+    {
       "path": "../babel-core"
     },
     {

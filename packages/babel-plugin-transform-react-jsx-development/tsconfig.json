@@ -9,13 +9,7 @@
   ],
   "references": [
     {
-      "path": "../babel-helper-builder-react-jsx-experimental"
-    },
-    {
-      "path": "../babel-helper-plugin-utils"
-    },
-    {
-      "path": "../babel-plugin-syntax-jsx"
+      "path": "../babel-plugin-transform-react-jsx"
     },
     {
       "path": "../babel-core"

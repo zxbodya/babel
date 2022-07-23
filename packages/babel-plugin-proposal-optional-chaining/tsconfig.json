@@ -12,6 +12,9 @@
       "path": "../babel-helper-plugin-utils"
     },
     {
+      "path": "../babel-helper-skip-transparent-expression-wrappers"
+    },
+    {
       "path": "../babel-core"
     },
     {
@@ -19,6 +22,9 @@
     },
     {
       "path": "../babel-plugin-transform-block-scoping"
+    },
+    {
+      "path": "../babel-traverse"
     }
   ]
 }

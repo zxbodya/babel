@@ -9,6 +9,9 @@
   ],
   "references": [
     {
+      "path": "../babel-helper-environment-visitor"
+    },
+    {
       "path": "../babel-helper-plugin-utils"
     },
     {

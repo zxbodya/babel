@@ -9,6 +9,9 @@
   ],
   "references": [
     {
+      "path": "../babel-helper-compilation-targets"
+    },
+    {
       "path": "../babel-helper-function-name"
     },
     {

@@ -7,5 +7,24 @@
   "include": [
     "./src/**/*"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../babel-helper-module-imports"
+    },
+    {
+      "path": "../babel-helper-plugin-utils"
+    },
+    {
+      "path": "../babel-helper-validator-option"
+    },
+    {
+      "path": "../babel-plugin-syntax-record-and-tuple"
+    },
+    {
+      "path": "../babel-core"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
+    }
+  ]
 }

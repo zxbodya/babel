@@ -9,9 +9,6 @@
   ],
   "references": [
     {
-      "path": "../babel-helper-hoist-variables"
-    },
-    {
       "path": "../babel-traverse"
     },
     {

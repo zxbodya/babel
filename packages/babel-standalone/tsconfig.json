@@ -2,10 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./lib",
-    "rootDir": "./src",
-    "lib": [
-      "dom"
-    ]
+    "rootDir": "./src"
   },
   "include": [
     "./src/**/*"
@@ -13,9 +10,6 @@
   "references": [
     {
       "path": "../babel-core"
-    },
-    {
-      "path": "../babel-helper-plugin-utils"
     },
     {
       "path": "../babel-plugin-external-helpers"
@@ -27,7 +21,13 @@
       "path": "../babel-plugin-proposal-class-properties"
     },
     {
+      "path": "../babel-plugin-proposal-class-static-block"
+    },
+    {
       "path": "../babel-plugin-proposal-decorators"
+    },
+    {
+      "path": "../babel-plugin-proposal-destructuring-private"
     },
     {
       "path": "../babel-plugin-proposal-do-expressions"
@@ -75,16 +75,25 @@
       "path": "../babel-plugin-proposal-private-methods"
     },
     {
+      "path": "../babel-plugin-proposal-private-property-in-object"
+    },
+    {
       "path": "../babel-plugin-proposal-throw-expressions"
     },
     {
       "path": "../babel-plugin-proposal-unicode-property-regex"
     },
     {
-      "path": "../babel-plugin-syntax-class-properties"
+      "path": "../babel-plugin-proposal-unicode-sets-regex"
+    },
+    {
+      "path": "../babel-plugin-syntax-decimal"
     },
     {
       "path": "../babel-plugin-syntax-decorators"
+    },
+    {
+      "path": "../babel-plugin-syntax-destructuring-private"
     },
     {
       "path": "../babel-plugin-syntax-do-expressions"
@@ -102,16 +111,19 @@
       "path": "../babel-plugin-syntax-function-sent"
     },
     {
+      "path": "../babel-plugin-syntax-import-assertions"
+    },
+    {
       "path": "../babel-plugin-syntax-jsx"
+    },
+    {
+      "path": "../babel-plugin-syntax-module-blocks"
     },
     {
       "path": "../babel-plugin-syntax-pipeline-operator"
     },
     {
       "path": "../babel-plugin-syntax-record-and-tuple"
-    },
-    {
-      "path": "../babel-plugin-syntax-top-level-await"
     },
     {
       "path": "../babel-plugin-syntax-typescript"
@@ -262,6 +274,9 @@
     },
     {
       "path": "../babel-plugin-transform-typescript"
+    },
+    {
+      "path": "../babel-plugin-transform-unicode-escapes"
     },
     {
       "path": "../babel-plugin-transform-unicode-regex"

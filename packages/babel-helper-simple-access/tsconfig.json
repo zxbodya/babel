@@ -9,9 +9,6 @@
   ],
   "references": [
     {
-      "path": "../babel-template"
-    },
-    {
       "path": "../babel-types"
     },
     {

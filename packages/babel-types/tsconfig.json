@@ -9,7 +9,16 @@
   ],
   "references": [
     {
+      "path": "../babel-helper-string-parser"
+    },
+    {
       "path": "../babel-helper-validator-identifier"
+    },
+    {
+      "path": "../babel-generator"
+    },
+    {
+      "path": "../babel-parser"
     }
   ]
 }

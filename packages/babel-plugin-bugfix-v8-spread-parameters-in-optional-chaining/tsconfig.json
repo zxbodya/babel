@@ -7,5 +7,24 @@
   "include": [
     "./src/**/*"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../babel-helper-plugin-utils"
+    },
+    {
+      "path": "../babel-helper-skip-transparent-expression-wrappers"
+    },
+    {
+      "path": "../babel-plugin-proposal-optional-chaining"
+    },
+    {
+      "path": "../babel-core"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
+    },
+    {
+      "path": "../babel-traverse"
+    }
+  ]
 }

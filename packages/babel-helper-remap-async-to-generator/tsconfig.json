@@ -12,16 +12,19 @@
       "path": "../babel-helper-annotate-as-pure"
     },
     {
+      "path": "../babel-helper-environment-visitor"
+    },
+    {
       "path": "../babel-helper-wrap-function"
     },
     {
-      "path": "../babel-template"
+      "path": "../babel-types"
+    },
+    {
+      "path": "../babel-core"
     },
     {
       "path": "../babel-traverse"
-    },
-    {
-      "path": "../babel-types"
     }
   ]
 }

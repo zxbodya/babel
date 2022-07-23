@@ -9,10 +9,10 @@
   ],
   "references": [
     {
-      "path": "../babel-helper-module-imports"
+      "path": "../babel-helper-environment-visitor"
     },
     {
-      "path": "../babel-helper-replace-supers"
+      "path": "../babel-helper-module-imports"
     },
     {
       "path": "../babel-helper-simple-access"
@@ -21,13 +21,16 @@
       "path": "../babel-helper-split-export-declaration"
     },
     {
+      "path": "../babel-helper-validator-identifier"
+    },
+    {
       "path": "../babel-template"
     },
     {
-      "path": "../babel-types"
+      "path": "../babel-traverse"
     },
     {
-      "path": "../babel-traverse"
+      "path": "../babel-types"
     }
   ]
 }

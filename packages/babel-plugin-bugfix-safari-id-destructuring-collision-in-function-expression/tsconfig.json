@@ -9,7 +9,19 @@
   ],
   "references": [
     {
-      "path": "../babel-types"
+      "path": "../babel-helper-plugin-utils"
+    },
+    {
+      "path": "../babel-core"
+    },
+    {
+      "path": "../babel-helper-function-name"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
+    },
+    {
+      "path": "../babel-traverse"
     }
   ]
 }

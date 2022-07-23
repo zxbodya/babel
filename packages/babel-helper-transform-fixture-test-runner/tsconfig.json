@@ -9,16 +9,16 @@
   ],
   "references": [
     {
-      "path": "../babel-core"
-    },
-    {
       "path": "../babel-code-frame"
     },
     {
-      "path": "../babel-helper-fixtures"
+      "path": "../babel-core"
     },
     {
-      "path": "../babel-polyfill"
+      "path": "../babel-helper-check-duplicate-nodes"
+    },
+    {
+      "path": "../babel-helper-fixtures"
     }
   ]
 }

@@ -12,9 +12,6 @@
       "path": "../babel-helper-plugin-utils"
     },
     {
-      "path": "../babel-helper-regex"
-    },
-    {
       "path": "../babel-core"
     },
     {

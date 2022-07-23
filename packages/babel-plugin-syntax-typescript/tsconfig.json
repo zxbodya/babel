@@ -13,6 +13,9 @@
     },
     {
       "path": "../babel-core"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
     }
   ]
 }

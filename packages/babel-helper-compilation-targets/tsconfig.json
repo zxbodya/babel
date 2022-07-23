@@ -9,7 +9,16 @@
   ],
   "references": [
     {
+      "path": "../babel-compat-data"
+    },
+    {
       "path": "../babel-helper-validator-option"
+    },
+    {
+      "path": "../babel-core"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
     }
   ]
 }

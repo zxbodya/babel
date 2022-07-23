@@ -10,6 +10,27 @@
   "references": [
     {
       "path": "../babel-helper-plugin-utils"
+    },
+    {
+      "path": "../babel-plugin-syntax-destructuring-private"
+    },
+    {
+      "path": "../babel-plugin-transform-destructuring"
+    },
+    {
+      "path": "../babel-plugin-transform-parameters"
+    },
+    {
+      "path": "../babel-core"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
+    },
+    {
+      "path": "../babel-traverse"
+    },
+    {
+      "path": "../babel-types"
     }
   ]
 }

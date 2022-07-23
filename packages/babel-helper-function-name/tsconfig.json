@@ -9,9 +9,6 @@
   ],
   "references": [
     {
-      "path": "../babel-helper-get-function-arity"
-    },
-    {
       "path": "../babel-template"
     },
     {

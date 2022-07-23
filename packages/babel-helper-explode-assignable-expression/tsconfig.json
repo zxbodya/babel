@@ -9,10 +9,10 @@
   ],
   "references": [
     {
-      "path": "../babel-traverse"
+      "path": "../babel-types"
     },
     {
-      "path": "../babel-types"
+      "path": "../babel-traverse"
     }
   ]
 }

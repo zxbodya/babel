@@ -12,6 +12,9 @@
       "path": "../babel-helper-plugin-utils"
     },
     {
+      "path": "../babel-helper-validator-option"
+    },
+    {
       "path": "../babel-plugin-transform-flow-strip-types"
     },
     {

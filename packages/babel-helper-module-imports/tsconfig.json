@@ -12,6 +12,9 @@
       "path": "../babel-types"
     },
     {
+      "path": "../babel-core"
+    },
+    {
       "path": "../babel-traverse"
     }
   ]

@@ -15,6 +15,12 @@
       "path": "../babel-helper-plugin-utils"
     },
     {
+      "path": "../babel-helper-replace-supers"
+    },
+    {
+      "path": "../babel-helper-split-export-declaration"
+    },
+    {
       "path": "../babel-plugin-syntax-decorators"
     },
     {

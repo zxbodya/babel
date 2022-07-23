@@ -22,6 +22,9 @@
     },
     {
       "path": "../babel-helper-plugin-test-runner"
+    },
+    {
+      "path": "../babel-plugin-external-helpers"
     }
   ]
 }

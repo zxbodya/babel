@@ -9,16 +9,19 @@
   ],
   "references": [
     {
-      "path": "../babel-helper-builder-react-jsx"
+      "path": "../babel-helper-annotate-as-pure"
     },
     {
-      "path": "../babel-helper-builder-react-jsx-experimental"
+      "path": "../babel-helper-module-imports"
     },
     {
       "path": "../babel-helper-plugin-utils"
     },
     {
       "path": "../babel-plugin-syntax-jsx"
+    },
+    {
+      "path": "../babel-types"
     },
     {
       "path": "../babel-core"

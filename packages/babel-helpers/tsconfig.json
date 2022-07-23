@@ -16,6 +16,15 @@
     },
     {
       "path": "../babel-types"
+    },
+    {
+      "path": "../babel-generator"
+    },
+    {
+      "path": "../babel-helper-plugin-test-runner"
+    },
+    {
+      "path": "../babel-parser"
     }
   ]
 }

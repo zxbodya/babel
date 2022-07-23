@@ -9,6 +9,12 @@
   ],
   "references": [
     {
+      "path": "../babel-helper-annotate-as-pure"
+    },
+    {
+      "path": "../babel-helper-environment-visitor"
+    },
+    {
       "path": "../babel-helper-function-name"
     },
     {
@@ -16,9 +22,6 @@
     },
     {
       "path": "../babel-helper-optimise-call-expression"
-    },
-    {
-      "path": "../babel-helper-plugin-utils"
     },
     {
       "path": "../babel-helper-replace-supers"
@@ -31,6 +34,9 @@
     },
     {
       "path": "../babel-helper-plugin-test-runner"
+    },
+    {
+      "path": "../babel-preset-env"
     }
   ]
 }
